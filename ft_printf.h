@@ -19,6 +19,8 @@ char ft_is_format_code(char c);
 int ft_go_to_percent(char *s, t_list **lst);
 int ft_get_format_result(char *s, t_list **lst);
 char *ft_translate_fmt(t_plist *plst);
+char *ft_format_width_precise(char *s, t_plist *params);
+char *ft_concat_padding(char *param_str, size_t len, char c, int is_left);
 
 t_plist *ft_init_plist();
 
