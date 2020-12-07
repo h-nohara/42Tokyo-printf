@@ -15,14 +15,10 @@ void ft_printf(char *fmt, ...)
         return ;
     while (1) {
         printf("go to percent\n");
-        if ((res = ft_go_to_percent(fmt, lst)) == -1)
+        if ((fmt = ft_detect_percent(fmt, lst)) == NULL)
             break ;
-        fmt += res;
         printf("get format\n");
-        if ((res = ft_get_format_result(fmt, lst, &args)) == -1)
-            break ;
-        fmt += res;
-        if (!fmt)
+        if ((fmt = ft_get_format_result(fmt, lst, &args)) == NULL)
             break ;
     }
     printf("go to finish\n");
@@ -38,62 +34,27 @@ char ft_is_format_code(char c)
     return (0);
 }
 
-int ft_go_to_percent(char *s, t_list **lst)
+
+char *ft_get_format_result(char *s, t_list **lst, va_list *args)
 {
-    int i;
     char *tmp;
-
-    i = 0;
-    while (s[i] && s[i] != '%')
-        ++i;
-    tmp = ft_substr(s, 0, i);
-
-    if (ft_lst_append(lst, tmp) == -1)
-        return (-1);
-    return (i);
-}
-
-int ft_get_format_result(char *s, t_list **lst, va_list *args)
-{
-    int i;
-    char *tmp;
-    t_list *new_lst;
-    t_plist *plst;
+    t_plist *params;
 
     if (*s != '%')
-        return (-1);
-    plst = ft_init_plist();
-    i = 1;
-    while (s[i] == '0' || s[i] == '-')
-    {
-        if (s[i] == '0')
-            plst->flag_zero = 1;
-        else
-            plst->flag_minus = 1;
-        ++i;
-    }
-    int start = i;
-    while (ft_isdigit(s[i]))
-        ++i;
-    if (i != start)
-        plst->width = ft_atoi(ft_substr(s + start, 0, i - start));
-    if (s[i] == '.')
-    {
-        start = ++i;
-        while (ft_isdigit(s[i]))
-            ++i;
-        if (i != start)
-            plst->precise = ft_atoi(ft_substr(s + start, 0, i - start));
-    }
-    if (ft_is_format_code(s[i]))
-        plst->type = s[i++];
+        return (NULL);
+    params = ft_init_params();
+    ++s;
+    s = ft_detect_flag(s, params);
+    s = ft_detect_width(s, params);
+    s = ft_detect_precise(s, params);
+    if (ft_is_format_code(*s))
+        params->type = *(s++);
     else
-        return (i);
-    tmp = ft_translate_fmt(plst, args);
-
+        return (s);
+    tmp = ft_translate_fmt(params, args);
     if (ft_lst_append(lst, tmp) == -1)
-        return (-1);
-    return (i);
+        return (NULL);
+    return (s);
 }
 
 char *ft_translate_fmt(t_plist *plst, va_list *args)

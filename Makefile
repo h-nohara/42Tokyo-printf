@@ -1,7 +1,7 @@
 CC = gcc
 NAME = libftprintf.a
 
-SRC = ft_printf.c ft_plist_util.c ft_tlist_util.c ft_string_util.c
+SRC = ft_printf.c ft_plist_util.c ft_tlist_util.c ft_string_util.c ft_detection.c
 OBJ = ${SRC:.c=.o}
 
 .c.o:
