@@ -1,6 +1,6 @@
 #include "ft_printf.h"
 
-t_plist *ft_init_plist()
+t_plist *ft_init_params()
 {
     t_plist *lst;
 
