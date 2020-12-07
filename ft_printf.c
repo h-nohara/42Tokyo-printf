@@ -3,12 +3,12 @@
 
 void ft_printf(char *fmt, ...)
 {
-    va_list ap;
+    va_list args;
     t_list **lst;
     int res;
 
     printf("start\n");
-    va_start(ap, fmt);
+    va_start(args, fmt);
 
     *lst = ft_lstnew(ft_strdup(""));
     if (!(*lst))
@@ -19,7 +19,7 @@ void ft_printf(char *fmt, ...)
             break ;
         fmt += res;
         printf("get format\n");
-        if ((res = ft_get_format_result(fmt, lst)) == -1)
+        if ((res = ft_get_format_result(fmt, lst, &args)) == -1)
             break ;
         fmt += res;
         if (!fmt)
@@ -53,7 +53,7 @@ int ft_go_to_percent(char *s, t_list **lst)
     return (i);
 }
 
-int ft_get_format_result(char *s, t_list **lst)
+int ft_get_format_result(char *s, t_list **lst, va_list *args)
 {
     int i;
     char *tmp;
@@ -86,25 +86,27 @@ int ft_get_format_result(char *s, t_list **lst)
             plst->precise = ft_atoi(ft_substr(s + start, 0, i - start));
     }
     if (ft_is_format_code(s[i]))
-        plst->type = s[i];
-
-    tmp = ft_translate_fmt(plst);
-    ++i;
+        plst->type = s[i++];
+    else
+        return (i);
+    tmp = ft_translate_fmt(plst, args);
 
     if (ft_lst_append(lst, tmp) == -1)
         return (-1);
     return (i);
 }
 
-char *ft_translate_fmt(t_plist *plst)
+char *ft_translate_fmt(t_plist *plst, va_list *args)
 {
     char *param_str;
     char *res;
 
     if (plst->type == 's')
-        param_str = "hohe";
+        param_str = va_arg(*args, char*);
+    else if (plst->type == 'c')
+        param_str = ft_ctos((char)va_arg(*args, int));
     else if (plst->type == 'd')
-        param_str = "123";
+        param_str = ft_itoa(va_arg(*args, int));
     else
         param_str = "snord";
     res = ft_format_width_precise(param_str, plst);
@@ -125,10 +127,17 @@ char *ft_format_width_precise(char *param_str, t_plist *params)
         len_all = params->width;
     else
     {
-        if (params->precise == -1 || len_org <= params->precise)
+        if (params->precise == -1)
         {
             printf("here10\n");
             len_all = len_org;
+        }
+        else if (len_org <= params->precise)
+        {
+            if (params->type == 's' || params->type == 'c')
+                len_all = len_org;
+            else
+                len_all = params->precise;
         }
         else
         {
