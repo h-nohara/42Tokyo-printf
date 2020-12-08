@@ -2,6 +2,8 @@
 
 void ft_free_one(void *content)
 {
+    if (!content)
+        return ;
     /*free(content);*/
 }
 

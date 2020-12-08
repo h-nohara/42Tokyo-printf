@@ -1,6 +1,7 @@
 #ifndef FT_PRINTF_H
  #define FT_PRINTF_H
 
+#include <stdio.h>
 #include "libft/libft.h"
 #include <stdlib.h>
 #include <stdarg.h>
@@ -13,6 +14,18 @@ typedef struct s_plist
     int precise;
     char type;
 } t_plist;
+
+typedef struct s_fmt_len_info
+{
+    int len_all;
+    int len_org;
+    int len_org_filled;
+    int len_org_filled_cut;
+    int len_zero_padding;
+    int len_padding;
+} t_fmt_len_info;
+
+t_fmt_len_info *info_new();
 
 void ft_printf(char *fmt, ...);
 char ft_is_format_code(char c);
@@ -37,5 +50,16 @@ char *ft_detect_percent(char *s, t_list **lst);
 char *ft_detect_flag(char *s, t_plist *params);
 char *ft_detect_width(char *s, t_plist *params);
 char *ft_detect_precise(char *s, t_plist *params);
+
+/* get formatted length */
+void get_block_len_all(t_plist *params, t_fmt_len_info *info);
+void get_block_len_org_filled(t_plist *params, t_fmt_len_info *info);
+void get_block_len_org_filled_cut(t_fmt_len_info *info);
+void get_block_len_padding(t_fmt_len_info *info);
+
+/* format */
+char *convert_org_str(char *s, t_fmt_len_info *info);
+char *ft_format_width_precise(char *param_str, t_plist *params);
+char *ft_translate_fmt(t_plist *plst, va_list *args);
 
 #endif
