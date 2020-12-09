@@ -10,7 +10,7 @@ char *ft_ctos(char c)
     return (s);
 }
 
-char *ft_concat_padding(char *param_str, size_t len, char c, int is_left)
+char *ft_concat_padding(char *param_str, size_t len, char c, int pad_right)
 {
     char *additional_str;
     char *res;
@@ -21,7 +21,7 @@ char *ft_concat_padding(char *param_str, size_t len, char c, int is_left)
     additional_str = ft_memset(additional_str, c, len);
     additional_str[len] = '\0';
 
-    if (is_left == 1)
+    if (pad_right == 0)
         res = ft_strjoin(additional_str, param_str);
     else
         res = ft_strjoin(param_str, additional_str);
@@ -30,4 +30,3 @@ char *ft_concat_padding(char *param_str, size_t len, char c, int is_left)
     else
         return (ft_strdup(param_str));
 }
-

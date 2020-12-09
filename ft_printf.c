@@ -67,10 +67,17 @@ char *ft_format_width_precise(char *param_str, t_plist *params)
     converted_org = convert_org_str(param_str, info);
     if ((info->len_padding) > 0)
     {
-        if ((params->type == 's' || params->type == 'c' || params->type == '%') && (params->flag_zero == 1))
-            res = ft_concat_padding(converted_org, (size_t)(info->len_padding), '0', 1);
+        if (params->type == 's' || params->type == 'c' || params->type == '%')
+        {
+            if (params->flag_minus == 1)
+                res = ft_concat_padding(converted_org, (size_t)(info->len_padding), ' ', 1);
+            else if (params->flag_zero == 1)
+                res = ft_concat_padding(converted_org, (size_t)(info->len_padding), '0', 0);
+            else
+                res = ft_concat_padding(converted_org, (size_t)(info->len_padding), ' ', 0);
+        }
         else
-            res = ft_concat_padding(converted_org, (size_t)(info->len_padding), ' ', 1);
+            res = ft_concat_padding(converted_org, (size_t)(info->len_padding), ' ', params->flag_minus == 1);
     }
     else
         res = converted_org;
@@ -115,6 +122,6 @@ char *convert_org_str(char *s, t_fmt_len_info *info)
     {
         return(ft_substr(s, 0, info->len_org_conv));
     } else {
-        return(ft_concat_padding(s,  info->len_zero_padding, '0', 1));
+        return(ft_concat_padding(s,  info->len_zero_padding, '0', 0));
     }
 }
