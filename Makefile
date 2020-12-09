@@ -2,7 +2,7 @@ CC = gcc
 NAME = libftprintf.a
 CFLAGS = -Wall -Wextra -Werror
 
-SRC = ft_printf.c ft_plist_util.c ft_tlist_util.c ft_string_util.c ft_detection.c ft_formatted_len.c
+SRC = ft_printf.c ft_plist_util.c ft_tlist_util.c ft_string_util.c ft_detection.c ft_formatted_len.c ft_hex.c
 OBJ = ${SRC:.c=.o}
 
 .c.o:

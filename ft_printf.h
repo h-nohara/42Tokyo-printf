@@ -59,4 +59,7 @@ char *convert_org_str(char *s, t_fmt_len_info *info);
 char *ft_format_width_precise(char *param_str, t_plist *params);
 char *ft_translate_fmt(t_plist *plst, va_list *args);
 
+/* hex */
+char *ft_convert_to_hex(int n, int is_upper);
+
 #endif

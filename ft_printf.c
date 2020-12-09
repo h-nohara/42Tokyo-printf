@@ -23,7 +23,7 @@ void ft_printf(char *fmt, ...)
 
 char ft_is_format_code(char c)
 {
-    if (c == 'c' || c == 's' || c == 'p' || c == 'd' || c == 'l' || c == 'u' ||
+    if (c == 'c' || c == 's' || c == 'p' || c == 'd' || c == 'i' || c == 'u' ||
         c == 'x' || c == 'X' || c == '%')
         return (c);
     return (0);
@@ -86,8 +86,14 @@ char *ft_translate_fmt(t_plist *params, va_list *args)
         param_str = va_arg(*args, char*);
     else if (params->type == 'c')
         param_str = ft_ctos((char)va_arg(*args, int));
-    else if (params->type == 'd')
+    else if (params->type == 'd' || params->type == 'i')
         param_str = ft_itoa(va_arg(*args, int));
+    else if (params->type == 'u')
+        param_str = ft_itoa(va_arg(*args, unsigned int));
+    else if (params->type == 'x' || params->type == 'X')
+        param_str = ft_convert_to_hex(va_arg(*args, int), params->type == 'X');
+    else if (params->type == 'p')
+        param_str = ft_strjoin("0x10", ft_convert_to_hex((int)va_arg(*args, int*), 0));
     else if (params->type == '%')
         param_str = ft_strdup("%");
     else
