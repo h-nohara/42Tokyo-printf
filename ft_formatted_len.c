@@ -7,70 +7,61 @@ t_fmt_len_info *info_new()
     info = (t_fmt_len_info*)malloc(sizeof(t_fmt_len_info));
     info->len_all = 0;
     info->len_org = 0;
-    info->len_org_filled = 0;
-    info->len_org_filled_cut = 0;
+    info->len_org_conv = 0;
     info->len_zero_padding = 0;
     info->len_padding = 0;
     return (info);
 }
 
-void get_block_len_all(t_plist *params, t_fmt_len_info *info)
+void get_block_len_str(t_plist *params, t_fmt_len_info *info)
 {
-    if (params->width != -1)
-        info->len_all = params->width;
-    else
+    int len_org;
+    int width;
+    int precise;
+
+    len_org = info->len_org;
+    width = params->width;
+    precise = params -> precise;
+    width = (width == -1) ? len_org : width;
+    precise = (precise == -1) ? len_org : precise;
+    info->len_org_conv = (precise > len_org) ? len_org : precise;
+    if (info->len_org_conv >= width)
     {
-        if (params->precise == -1)
-        {
-            printf("here10\n");
-            info->len_all = info->len_org;
-        }
-        else if (info->len_org <= params->precise)
-        {
-            if (params->type == 's' || params->type == 'c')
-                info->len_all = info->len_org;
-            else
-                info->len_all = params->precise;
-        }
-        else
-        {
-            printf("here11\n");
-            info->len_all = params->precise;
-        }
-    }
-}
-
-void get_block_len_org_filled(t_plist *params, t_fmt_len_info *info)
-{
-    if (params->precise == -1)
-        info->len_org_filled = info->len_org;
-    else
-    {
-        if (params->type == 's' || params->type == 'c')
-        {
-            if (params->precise >= info->len_org)
-                info->len_org_filled = info->len_org;
-            else
-                info->len_org_filled = params->precise;
-        }
-        else
-            info->len_org_filled = params->precise;
-    }
-}
-
-void get_block_len_org_filled_cut(t_fmt_len_info *info)
-{
-    if (info->len_all < info->len_org_filled)
-        info->len_org_filled_cut = info->len_all;
-    else
-        info->len_org_filled_cut = info->len_org_filled;
-}
-
-void get_block_len_padding(t_fmt_len_info *info)
-{
-    if (info->len_org_filled_cut < info->len_all)
-        info->len_padding = (info->len_all) - (info->len_org_filled_cut);
-    else
+        info->len_all = info->len_org_conv;
+        info->len_zero_padding = 0;
         info->len_padding = 0;
+    } else {
+        info->len_all = width;
+        info->len_zero_padding = 0;
+        info->len_padding = info->len_all - info->len_org_conv;
+    }
+}
 
+void get_block_len_int(t_plist *params, t_fmt_len_info *info)
+{
+    int len_org;
+    int width;
+    int precise;
+
+    len_org = info->len_org;
+    width = params->width;
+    precise = params -> precise;
+    width = (width == -1) ? len_org : width;
+    precise = (precise == -1) ? len_org : precise;
+    if (precise <= len_org)
+    {
+        info->len_org_conv = len_org;
+        info->len_zero_padding = 0;
+    } else {
+        info->len_org_conv = precise;  /* (zero_pad + org) and cut */
+        info->len_zero_padding = precise - len_org;
+    }
+    if (precise >= width)
+    {
+        info->len_all = info->len_org_conv;
+        info->len_padding = 0;
+    } else {
+        info->len_all = width;
+        info->len_padding = width - info->len_org_conv;
+    }
 }

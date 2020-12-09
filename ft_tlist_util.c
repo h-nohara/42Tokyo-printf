@@ -30,5 +30,4 @@ void ft_print_iter(t_list *lst)
         ft_putstr_fd(lst->content, 1);
         lst = lst->next;
     }
-    ft_putchar_fd('\n', 1);
 }

@@ -19,8 +19,7 @@ typedef struct s_fmt_len_info
 {
     int len_all;
     int len_org;
-    int len_org_filled;
-    int len_org_filled_cut;
+    int len_org_conv;
     int len_zero_padding;
     int len_padding;
 } t_fmt_len_info;
@@ -52,10 +51,8 @@ char *ft_detect_width(char *s, t_plist *params);
 char *ft_detect_precise(char *s, t_plist *params);
 
 /* get formatted length */
-void get_block_len_all(t_plist *params, t_fmt_len_info *info);
-void get_block_len_org_filled(t_plist *params, t_fmt_len_info *info);
-void get_block_len_org_filled_cut(t_fmt_len_info *info);
-void get_block_len_padding(t_fmt_len_info *info);
+void get_block_len_str(t_plist *params, t_fmt_len_info *info);
+void get_block_len_int(t_plist *params, t_fmt_len_info *info);
 
 /* format */
 char *convert_org_str(char *s, t_fmt_len_info *info);

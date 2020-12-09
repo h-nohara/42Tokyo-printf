@@ -64,23 +64,26 @@ char *ft_format_width_precise(char *param_str, t_plist *params)
 
     info = info_new();
     info->len_org = ft_strlen(param_str);
-    get_block_len_all(params, info);
-    get_block_len_org_filled(params, info);
-    get_block_len_org_filled_cut(info);
-    get_block_len_padding(info);
+    if (params->type == 's' || params->type == '%')
+        get_block_len_str(params, info);
+    else
+        get_block_len_int(params, info);
 
-    printf("len_org : %d, preciese : %d, len_all : %d, len_org_filled : %d\n", info->len_org, params->precise, info->len_all, info->len_org_filled);
-    printf("param_str : %s, len_org_filled_cut : %d, len_padding : %d\n", param_str, info->len_org_filled_cut, info->len_padding);
+    printf("len_org : %d, preciese : %d, len_all : %d\n", info->len_org, params->precise, info->len_all);
+    printf("param_str : %s, len_padding : %d\n", param_str, info->len_padding);
 
     converted_org = convert_org_str(param_str, info);
-    printf("param_str : %s, len_org_filled_cut : %d, len_padding : %d\n", param_str, (info->len_org_filled_cut), (info->len_padding));
+    printf("param_str : %s, len_padding : %d\n", param_str, (info->len_padding));
 
     printf("+++++ %s\n", converted_org);
     if ((info->len_padding) > 0)
     {
         printf("start cancat_padding\n");
         printf("converted org : %s, len_padding : %d\n", converted_org, info->len_padding);
-        res = ft_concat_padding(converted_org, (size_t)(info->len_padding), ' ', 1);
+        if ((params->type == 's' || params->type == 'c' || params->type == '%') && (params->flag_zero == 1))
+            res = ft_concat_padding(converted_org, (size_t)(info->len_padding), '0', 1);
+        else
+            res = ft_concat_padding(converted_org, (size_t)(info->len_padding), ' ', 1);
     }
     else
     {
@@ -91,41 +94,39 @@ char *ft_format_width_precise(char *param_str, t_plist *params)
     return (res);
 }
 
-char *ft_translate_fmt(t_plist *plst, va_list *args)
+char *ft_translate_fmt(t_plist *params, va_list *args)
 {
     char *param_str;
     char *res;
 
-    if (plst->type == 's')
+    if (params->type == 's')
         param_str = va_arg(*args, char*);
-    else if (plst->type == 'c')
+    else if (params->type == 'c')
         param_str = ft_ctos((char)va_arg(*args, int));
-    else if (plst->type == 'd')
+    else if (params->type == 'd')
         param_str = ft_itoa(va_arg(*args, int));
+    else if (params->type == '%')
+        param_str = ft_strdup("%");
     else
-        param_str = "snord";
+        param_str = ft_strdup("snord");
     /* printf("comment here is needed\n"); */
-    res = ft_format_width_precise(param_str, plst);
+    res = ft_format_width_precise(param_str, params);
     return (res);
 }
 
 char *convert_org_str(char *s, t_fmt_len_info *info)
 {
-    int len_zero_padding;
+    int len_org;
+    int len_org_conv;
 
-    if ((info->len_org_filled_cut) < (info->len_org))
+    len_org = info->len_org;
+    len_org_conv = info->len_org_conv;
+    if (len_org_conv == len_org)
+        return(ft_strdup(s));
+    else if (len_org_conv < len_org)
     {
-        printf("here1\n");
-        return(ft_substr(s, 0, info->len_org_filled_cut));
-    }
-    else if ((info->len_org_filled_cut) > (info->len_org))
-    {
-        printf("here2\n");
-        len_zero_padding = (info->len_org_filled_cut) - (info->len_org);
-        printf("%d\n", info->len_padding);
-        return(ft_concat_padding(s,  len_zero_padding, '0', 1));
+        return(ft_substr(s, 0, info->len_org_conv));
     } else {
-        printf("here3\n");
-        return(s);
+        return(ft_concat_padding(s,  info->len_zero_padding, '0', 1));
     }
 }
