@@ -47,13 +47,18 @@ char *ft_detect_width(char *s, t_plist *params, va_list *args)
     return (s);
 }
 
-char *ft_detect_precise(char *s, t_plist *params)
+char *ft_detect_precise(char *s, t_plist *params, va_list *args)
 {
     char *start;
 
     if (*s == '.')
     {
         start = ++s;
+        if (*s == '*')
+        {
+            params->precise = va_arg(*args, int);
+            ++s;
+        }
         while (ft_isdigit(*s))
             ++s;
         if (s == start)

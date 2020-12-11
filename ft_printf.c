@@ -41,7 +41,7 @@ char *ft_get_format_result(char *s, t_list **lst, va_list *args)
     ++s;
     s = ft_detect_flag(s, params);
     s = ft_detect_width(s, params, args);
-    s = ft_detect_precise(s, params);
+    s = ft_detect_precise(s, params, args);
     if (ft_is_format_code(*s))
         params->type = *(s++);
     else
