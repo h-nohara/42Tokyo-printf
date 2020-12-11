@@ -84,13 +84,24 @@ char *ft_format_width_precise(char *param_str, t_plist *params)
     return (res);
 }
 
+char *ft_va_arg_s(va_list *args)
+{
+    char *s;
+
+    s = va_arg(*args, char*);
+    if (!s)
+        return ("(null)");
+    else
+        return (s);
+}
+
 char *ft_translate_fmt(t_plist *params, va_list *args)
 {
     char *param_str;
     char *res;
 
     if (params->type == 's')
-        param_str = va_arg(*args, char*);
+        param_str = ft_va_arg_s(args);
     else if (params->type == 'c')
         param_str = ft_ctos((char)va_arg(*args, int));
     else if (params->type == 'd' || params->type == 'i')

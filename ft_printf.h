@@ -34,6 +34,8 @@ char *ft_translate_fmt(t_plist *plst, va_list *args);
 char *ft_format_width_precise(char *s, t_plist *params);
 char *ft_concat_padding(char *param_str, size_t len, char c, int is_left);
 
+char *ft_va_arg_s(va_list *args);
+
 t_plist *ft_init_params();
 
 void ft_free_one(void *content);
