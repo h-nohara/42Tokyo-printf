@@ -1,7 +1,7 @@
 #include "ft_printf.h"
 #include <stdio.h>
 
-void ft_printf(char *fmt, ...)
+int ft_printf(char *fmt, ...)
 {
     va_list args;
     t_list *lst;
@@ -10,14 +10,14 @@ void ft_printf(char *fmt, ...)
 
     lst = ft_lstnew(ft_strdup(""));
     if (!lst)
-        return ;
+        return (-1);
     while (1) {
         if ((fmt = ft_detect_percent(fmt, &lst)) == NULL)
             break ;
         if ((fmt = ft_get_format_result(fmt, &lst, &args)) == NULL)
             break ;
     }
-    ft_print_iter(lst);
+    return(ft_print_iter(lst));
     /*ft_clear_tlist(lst);*/
 }
 
@@ -119,9 +119,7 @@ char *convert_org_str(char *s, t_fmt_len_info *info)
     if (len_org_conv == len_org)
         return(ft_strdup(s));
     else if (len_org_conv < len_org)
-    {
-        return(ft_substr(s, 0, info->len_org_conv));
-    } else {
-        return(ft_concat_padding(s,  info->len_zero_padding, '0', 0));
-    }
+        return (ft_substr(s, 0, info->len_org_conv));
+    else
+        return (ft_concat_padding(s,  info->len_zero_padding, '0', 0));
 }

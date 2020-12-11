@@ -23,11 +23,16 @@ int ft_lst_append(t_list **lst, void *content)
     return (0);
 }
 
-void ft_print_iter(t_list *lst)
+int ft_print_iter(t_list *lst)
 {
+    int n;
+
+    n = 0;
     while (lst)
     {
         ft_putstr_fd(lst->content, 1);
+        n += ft_strlen(lst->content);
         lst = lst->next;
     }
+    return (n);
 }
