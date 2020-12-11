@@ -60,7 +60,7 @@ char *ft_format_width_precise(char *param_str, t_plist *params)
 
     info = info_new();
     info->len_org = ft_strlen(param_str);
-    if (params->type == 's' || params->type == '%')
+    if (params->type == 's')
         get_block_len_str(params, info);
     else
         get_block_len_int(params, info);
@@ -104,7 +104,7 @@ char *ft_translate_fmt(t_plist *params, va_list *args)
     else if (params->type == '%')
         param_str = ft_strdup("%");
     else
-        param_str = ft_strdup("snord");
+        param_str = ft_strdup("");
     res = ft_format_width_precise(param_str, params);
     return (res);
 }

@@ -56,7 +56,9 @@ char *ft_detect_precise(char *s, t_plist *params)
         start = ++s;
         while (ft_isdigit(*s))
             ++s;
-        if (s != start)
+        if (s == start)
+            params->precise = -2;
+        else
             params->precise = ft_atoi(ft_substr(start, 0, s - start));
     }
     return (s);

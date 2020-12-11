@@ -23,7 +23,10 @@ void get_block_len_str(t_plist *params, t_fmt_len_info *info)
     width = params->width;
     precise = params -> precise;
     width = (width == -1) ? len_org : width;
-    precise = (precise == -1) ? len_org : precise;
+    if (precise == -1)
+        precise = len_org;
+    else if (precise == -2)
+        precise = 0;
     info->len_org_conv = (precise > len_org) ? len_org : precise;
     if (info->len_org_conv >= width)
     {
@@ -47,7 +50,7 @@ void get_block_len_int(t_plist *params, t_fmt_len_info *info)
     width = params->width;
     precise = params -> precise;
     width = (width == -1) ? len_org : width;
-    precise = (precise == -1) ? len_org : precise;
+    precise = (precise >= 0) ? precise : len_org;
     if (precise <= len_org)
     {
         info->len_org_conv = len_org;
