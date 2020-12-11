@@ -40,7 +40,7 @@ char *ft_get_format_result(char *s, t_list **lst, va_list *args)
     params = ft_init_params();
     ++s;
     s = ft_detect_flag(s, params);
-    s = ft_detect_width(s, params);
+    s = ft_detect_width(s, params, args);
     s = ft_detect_precise(s, params);
     if (ft_is_format_code(*s))
         params->type = *(s++);

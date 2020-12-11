@@ -30,11 +30,16 @@ char *ft_detect_flag(char *s, t_plist *params)
     return (s);
 }
 
-char *ft_detect_width(char *s, t_plist *params)
+char *ft_detect_width(char *s, t_plist *params, va_list *args)
 {
     char *start;
 
     start = s;
+    if (*s == '*')
+    {
+        params->width = va_arg(*args, int);
+        ++s;
+    }
     while (ft_isdigit(*s))
         ++s;
     if (s != start)

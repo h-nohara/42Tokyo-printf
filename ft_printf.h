@@ -47,7 +47,7 @@ char *ft_ctos(char c);
 /* detection */
 char *ft_detect_percent(char *s, t_list **lst);
 char *ft_detect_flag(char *s, t_plist *params);
-char *ft_detect_width(char *s, t_plist *params);
+char *ft_detect_width(char *s, t_plist *params, va_list *args);
 char *ft_detect_precise(char *s, t_plist *params);
 
 /* get formatted length */
