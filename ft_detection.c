@@ -34,12 +34,12 @@ char *ft_detect_width(char *s, t_plist *params, va_list *args)
 {
     char *start;
 
-    start = s;
     if (*s == '*')
     {
         params->width = va_arg(*args, int);
         ++s;
     }
+    start = s;
     while (ft_isdigit(*s))
         ++s;
     if (s != start)
@@ -50,19 +50,26 @@ char *ft_detect_width(char *s, t_plist *params, va_list *args)
 char *ft_detect_precise(char *s, t_plist *params, va_list *args)
 {
     char *start;
+    int found;
 
+    found = 0;
     if (*s == '.')
     {
-        start = ++s;
+        ++s;
         if (*s == '*')
         {
             params->precise = va_arg(*args, int);
+            found = 1;
             ++s;
         }
+        start = s;
         while (ft_isdigit(*s))
             ++s;
         if (s == start)
-            params->precise = -2;
+        {
+            if (found == 0)
+                params->precise = -2;
+        }
         else
             params->precise = ft_atoi(ft_substr(start, 0, s - start));
     }
