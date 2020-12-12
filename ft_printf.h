@@ -57,7 +57,7 @@ void get_block_len_str(t_plist *params, t_fmt_len_info *info);
 void get_block_len_int(t_plist *params, t_fmt_len_info *info);
 
 /* format */
-char *convert_org_str(char *s, t_fmt_len_info *info);
+char *convert_org_str(char *s, t_fmt_len_info *info, char type);
 char *ft_format_width_precise(char *param_str, t_plist *params);
 char *ft_translate_fmt(t_plist *plst, va_list *args);
 

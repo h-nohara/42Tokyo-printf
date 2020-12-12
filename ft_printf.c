@@ -64,15 +64,20 @@ char *ft_format_width_precise(char *param_str, t_plist *params)
         get_block_len_str(params, info);
     else
         get_block_len_int(params, info);
-    converted_org = convert_org_str(param_str, info);
+    converted_org = convert_org_str(param_str, info, params->type);
     if ((info->len_padding) > 0)
     {
-        if (params->type == 's' || params->type == 'c' || params->type == '%')
+        if (params->type == 's' || params->type == 'c' || params->type == '%' || params->type == 'd' || params->type == 'i')
         {
             if (params->flag_minus == 1)
                 res = ft_concat_padding(converted_org, (size_t)(info->len_padding), ' ', 1);
             else if (params->flag_zero == 1)
-                res = ft_concat_padding(converted_org, (size_t)(info->len_padding), '0', 0);
+            {
+                if ((ft_strlen(param_str) > 0) && (*converted_org == '-') && (params->type == 'd' || params->type == 'i'))
+                    res = ft_strjoin("-", ft_concat_padding(++converted_org, (size_t)(info->len_padding), '0', 0));
+                else
+                    res = ft_concat_padding(converted_org, (size_t)(info->len_padding), '0', 0);
+            }
             else
                 res = ft_concat_padding(converted_org, (size_t)(info->len_padding), ' ', 0);
         }
@@ -120,7 +125,7 @@ char *ft_translate_fmt(t_plist *params, va_list *args)
     return (res);
 }
 
-char *convert_org_str(char *s, t_fmt_len_info *info)
+char *convert_org_str(char *s, t_fmt_len_info *info, char type)
 {
     int len_org;
     int len_org_conv;
@@ -132,5 +137,13 @@ char *convert_org_str(char *s, t_fmt_len_info *info)
     else if (len_org_conv < len_org)
         return (ft_substr(s, 0, info->len_org_conv));
     else
-        return (ft_concat_padding(s,  info->len_zero_padding, '0', 0));
+    {
+        if ((type == 'd' || type == 'i') && (*s == '-'))
+        {
+            info->len_padding = info->len_padding - 1;
+            return (ft_strjoin("-", ft_concat_padding(++s,  info->len_zero_padding + 1, '0', 0)));
+        }
+        else
+            return (ft_concat_padding(s,  info->len_zero_padding, '0', 0));
+    }
 }
