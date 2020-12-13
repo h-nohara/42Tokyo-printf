@@ -30,8 +30,7 @@ int ft_printf(char *fmt, ...);
 char ft_is_format_code(char c);
 char *ft_go_to_percent(char *s, t_list **lst);
 char *ft_get_format_result(char *s, t_list **lst, va_list *args);
-char *ft_translate_fmt(t_plist *plst, va_list *args);
-char *ft_format_width_precise(char *s, t_plist *params);
+
 char *ft_concat_padding(char *param_str, size_t len, char c, int is_left);
 
 char *ft_va_arg_s(va_list *args);
@@ -54,12 +53,18 @@ char *ft_detect_precise(char *s, t_plist *params, va_list *args);
 
 /* get formatted length */
 void get_block_len_str(t_plist *params, t_fmt_len_info *info);
-void get_block_len_int(t_plist *params, t_fmt_len_info *info);
 
 /* format */
 char *convert_org_str(char *s, t_fmt_len_info *info, char type);
-char *ft_format_width_precise(char *param_str, t_plist *params);
+char *ft_format(char *param_str, t_plist *params);
 char *ft_translate_fmt(t_plist *plst, va_list *args);
+
+/* format int */
+char *ft_int_pad_zero(char *s, int len_zero_pad);
+char *ft_format_int(char *param_str, t_plist *params);
+char *ft_format_int_w(char *param_str, t_plist *params);
+char *ft_format_int_p(char *param_str, t_plist *params);
+char *ft_format_int_wp(char *param_str, t_plist *params);
 
 /* hex */
 char *ft_convert_to_hex(int n, int is_upper);

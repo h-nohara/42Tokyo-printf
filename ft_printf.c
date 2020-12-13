@@ -52,7 +52,7 @@ char *ft_get_format_result(char *s, t_list **lst, va_list *args)
     return (s);
 }
 
-char *ft_format_width_precise(char *param_str, t_plist *params)
+char *ft_format_default(char *param_str, t_plist *params)
 {
     t_fmt_len_info *info;
     char *converted_org;
@@ -60,33 +60,71 @@ char *ft_format_width_precise(char *param_str, t_plist *params)
 
     info = info_new();
     info->len_org = ft_strlen(param_str);
-    if (params->type == 's' || params->type == '%' || params->type == 'c')
-        get_block_len_str(params, info);
-    else
-        get_block_len_int(params, info);
+    get_block_len_str(params, info);
     converted_org = convert_org_str(param_str, info, params->type);
-    if ((info->len_padding) > 0)
-    {
-        if (params->type == 's' || params->type == 'c' || params->type == '%' || params->type == 'd' || params->type == 'i')
-        {
-            if (params->flag_minus == 1)
-                res = ft_concat_padding(converted_org, (size_t)(info->len_padding), ' ', 1);
-            else if (params->flag_zero == 1)
-            {
-                if ((ft_strlen(param_str) > 0) && (*converted_org == '-') && (params->type == 'd' || params->type == 'i'))
-                    res = ft_strjoin("-", ft_concat_padding(++converted_org, (size_t)(info->len_padding), '0', 0));
-                else
-                    res = ft_concat_padding(converted_org, (size_t)(info->len_padding), '0', 0);
-            }
-            else
-                res = ft_concat_padding(converted_org, (size_t)(info->len_padding), ' ', 0);
-        }
-        else
-            res = ft_concat_padding(converted_org, (size_t)(info->len_padding), ' ', params->flag_minus == 1);
-    }
+    if (info->len_padding <= 0)
+        return (converted_org);
     else
-        res = converted_org;
+        res = ft_concat_padding(converted_org, (size_t)(info->len_padding), ' ', params->flag_minus == 1);
     return (res);
+
+}
+
+char *ft_format_str(char *param_str, t_plist *params)
+{
+    t_fmt_len_info *info;
+    char *converted_org;
+    char *res;
+
+    info = info_new();
+    info->len_org = ft_strlen(param_str);
+    get_block_len_str(params, info);
+    converted_org = convert_org_str(param_str, info, params->type);
+    if (info->len_padding <= 0)
+        return (converted_org);
+    if (params->flag_minus == 1)
+        res = ft_concat_padding(converted_org, (size_t)(info->len_padding), ' ', 1);
+    else if (params->flag_zero == 1)
+        res = ft_concat_padding(converted_org, (size_t)(info->len_padding), '0', 0);
+    else
+        res = ft_concat_padding(converted_org, (size_t)(info->len_padding), ' ', 0);
+    return (res);
+}
+
+/* char *ft_format_int(char *param_str, t_plist *params) */
+/* { */
+/*     t_fmt_len_info *info; */
+/*     char *converted_org; */
+/*     char *res; */
+
+/*     info = info_new(); */
+/*     info->len_org = ft_strlen(param_str); */
+/*     is_neg = 0; */
+/*     if (*param_str == '-') */
+/*         is_neg = 1; */
+/*     get_block_len_int(params, info, is_neg); */
+/*     converted_org = convert_org_str(param_str, info, params->type); */
+/*     if (info->len_padding <= 0) */
+/*         return (converted_org); */
+/*     if ((info->len_zero_padding == 0) && (params->flag_zero == 1)) */
+/*         res = ft_concat_padding(converted_org, (size_t)(info->len_padding), '0', params->flag_minus == 1); */
+/*     else */
+/*         res = ft_concat_padding(converted_org, (size_t)(info->len_padding), ' ', params->flag_minus == 1); */
+/*     return (res); */
+/* } */
+
+
+char *ft_format(char *param_str, t_plist *params)
+{
+    char type;
+
+    type = params->type;
+    if (type == 's' || type == '%' || type == 'c')
+        return (ft_format_str(param_str, params));
+    else if (type == 'd' || type == 'i' || type == 'u')
+        return (ft_format_int(param_str, params));
+    else
+        return (ft_format_default(param_str, params));
 }
 
 char *ft_va_arg_s(va_list *args)
@@ -121,7 +159,7 @@ char *ft_translate_fmt(t_plist *params, va_list *args)
         param_str = ft_strdup("%");
     else
         param_str = ft_strdup("");
-    res = ft_format_width_precise(param_str, params);
+    res = ft_format(param_str, params);
     return (res);
 }
 
@@ -140,8 +178,8 @@ char *convert_org_str(char *s, t_fmt_len_info *info, char type)
     {
         if ((type == 'd' || type == 'i') && (*s == '-'))
         {
-            info->len_padding = info->len_padding - 1;
-            return (ft_strjoin("-", ft_concat_padding(++s,  info->len_zero_padding + 1, '0', 0)));
+            /* info->len_padding = info->len_padding - 1; */
+            return (ft_strjoin("-", ft_concat_padding(++s,  info->len_zero_padding, '0', 0)));
         }
         else
             return (ft_concat_padding(s,  info->len_zero_padding, '0', 0));
