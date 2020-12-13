@@ -55,9 +55,12 @@ char *ft_detect_precise(char *s, t_plist *params, va_list *args);
 void get_block_len_str(t_plist *params, t_fmt_len_info *info);
 
 /* format */
-char *convert_org_str(char *s, t_fmt_len_info *info, char type);
+char *convert_org_str(char *s, t_fmt_len_info *info);
 char *ft_format(char *param_str, t_plist *params);
 char *ft_translate_fmt(t_plist *plst, va_list *args);
+
+/* format str */
+char *ft_format_str(char *param_str, t_plist *params);
 
 /* format int */
 char *ft_int_pad_zero(char *s, int len_zero_pad);
@@ -65,6 +68,13 @@ char *ft_format_int(char *param_str, t_plist *params);
 char *ft_format_int_w(char *param_str, t_plist *params);
 char *ft_format_int_p(char *param_str, t_plist *params);
 char *ft_format_int_wp(char *param_str, t_plist *params);
+
+/* format hex */
+char *ft_hex_pad_zero(char *s, int len_zero_pad);
+char *ft_format_hex(char *param_str, t_plist *params);
+char *ft_format_hex_w(char *param_str, t_plist *params);
+char *ft_format_hex_p(char *param_str, t_plist *params);
+char *ft_format_hex_wp(char *param_str, t_plist *params);
 
 /* hex */
 char *ft_convert_to_hex(int n, int is_upper);

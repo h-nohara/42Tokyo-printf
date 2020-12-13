@@ -1,49 +1,6 @@
 #include "ft_printf.h"
 
-t_fmt_len_info *info_new()
-{
-    t_fmt_len_info *info;
-
-    info = (t_fmt_len_info*)malloc(sizeof(t_fmt_len_info));
-    info->len_all = 0;
-    info->len_org = 0;
-    info->len_org_conv = 0;
-    info->len_zero_padding = 0;
-    info->len_padding = 0;
-    return (info);
-}
-
-void get_block_len_str(t_plist *params, t_fmt_len_info *info)
-{
-    int len_org;
-    int width;
-    int precise;
-
-    len_org = info->len_org;
-    width = params->width;
-    precise = params->precise;
-    width = (width == -1) ? 0 : width;
-    if (precise == -1)
-        precise = len_org;
-    else if (precise == -2 && params->type == 's')
-        precise = 0;
-    else if (precise == -2 && (params->type == 'c' || params->type == '%'))
-        precise = 1;
-    info->len_org_conv = (precise > len_org) ? len_org : precise;
-    if (info->len_org_conv >= width)
-    {
-        info->len_all = info->len_org_conv;
-        info->len_zero_padding = 0;
-        info->len_padding = 0;
-    } else {
-        info->len_all = width;
-        info->len_zero_padding = 0;
-        info->len_padding = info->len_all - info->len_org_conv;
-    }
-}
-
 char *ft_format_int(char *param_str, t_plist *params)
-/* void get_block_len_int(t_plist *params, t_fmt_len_info *info, int is_neg) */
 {
     int width;
     int precise;
