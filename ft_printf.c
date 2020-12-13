@@ -102,7 +102,7 @@ char *ft_translate_fmt(t_plist *params, va_list *args)
 {
     char *param_str;
     char *res;
-    int *p;
+    void *p;
 
     if (params->type == 's')
         param_str = ft_va_arg_s(args);
@@ -116,11 +116,11 @@ char *ft_translate_fmt(t_plist *params, va_list *args)
         param_str = ft_convert_to_hex(va_arg(*args, int), params->type == 'X');
     else if (params->type == 'p')
     {
-        p = va_arg(*args, int*);
+        p = va_arg(*args, void*);
         if (p == NULL)
             param_str = "0";
         else
-            param_str = ft_convert_to_hex((int)p, 0);
+            param_str = ft_convert_to_hex((int64_t)p, 0);
     }
     else if (params->type == '%')
         param_str = ft_strdup("%");

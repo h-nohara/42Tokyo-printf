@@ -5,6 +5,7 @@
 #include "libft/libft.h"
 #include <stdlib.h>
 #include <stdarg.h>
+#include <stdint.h>
 
 typedef struct s_plist
 {
@@ -82,6 +83,6 @@ char *ft_ptr_pad_zero(char *s, int len_zero_pad);
 char *ft_format_ptr(char *param_str, t_plist *params);
 
 /* hex */
-char *ft_convert_to_hex(int n, int is_upper);
+char *ft_convert_to_hex(long n, int is_upper);
 
 #endif

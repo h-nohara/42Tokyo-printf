@@ -1,6 +1,6 @@
 #include "ft_printf.h"
 
-static int get_hex_len(int n)
+static int get_hex_len(long n)
 {
     int i;
 
@@ -15,7 +15,7 @@ static int get_hex_len(int n)
     return (i);
 }
 
-char *ft_convert_to_hex(int n, int is_upper)
+char *ft_convert_to_hex(long n, int is_upper)
 {
     char *hex_ord;
     char *res;
