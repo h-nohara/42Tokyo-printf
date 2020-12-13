@@ -100,6 +100,7 @@ char *ft_translate_fmt(t_plist *params, va_list *args)
 {
     char *param_str;
     char *res;
+    int *p;
 
     if (params->type == 's')
         param_str = ft_va_arg_s(args);
@@ -112,7 +113,13 @@ char *ft_translate_fmt(t_plist *params, va_list *args)
     else if (params->type == 'x' || params->type == 'X')
         param_str = ft_convert_to_hex(va_arg(*args, int), params->type == 'X');
     else if (params->type == 'p')
-        param_str = ft_strjoin("0x10", ft_convert_to_hex((int)va_arg(*args, int*), 0));
+    {
+        p = va_arg(*args, int*);
+        if (p == NULL)
+            param_str = "0x";
+        else
+            param_str = ft_strjoin("0x10", ft_convert_to_hex((int)p, 0));
+    }
     else if (params->type == '%')
         param_str = ft_strdup("%");
     else
