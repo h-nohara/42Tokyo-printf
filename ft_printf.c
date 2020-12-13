@@ -111,7 +111,7 @@ char *ft_translate_fmt(t_plist *params, va_list *args)
     else if (params->type == 'd' || params->type == 'i')
         param_str = ft_itoa(va_arg(*args, int));
     else if (params->type == 'u')
-        param_str = ft_itoa(va_arg(*args, unsigned int));
+        param_str = ft_long_itoa(va_arg(*args, unsigned int));
     else if (params->type == 'x' || params->type == 'X')
         param_str = ft_convert_to_hex(va_arg(*args, int), params->type == 'X');
     else if (params->type == 'p')

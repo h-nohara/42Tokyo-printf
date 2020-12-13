@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <stdarg.h>
 #include <stdint.h>
+#include <limits.h>
 
 typedef struct s_plist
 {
@@ -45,6 +46,9 @@ int ft_print_iter(t_list *lst);
 
 /* string_util */
 char *ft_ctos(char c);
+
+/* long_itoa */
+char *ft_long_itoa(long n);
 
 /* detection */
 char *ft_detect_percent(char *s, t_list **lst);
