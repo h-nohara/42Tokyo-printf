@@ -1,11 +1,35 @@
 #include "ft_printf.h"
 
+int ft_hex_is_zero(char *s)
+{
+    if (*s == '0' && ft_strlen(s) == 1)
+        return (1);
+    else
+        return (0);
+}
+
 char *ft_format_hex(char *param_str, t_plist *params)
 {
     int width;
     int precise;
 
     width = params->width;
+    if (params->precise == 0)
+    {
+        if (ft_hex_is_zero(param_str) == 0)
+            params->precise = 1;
+        else {
+            if (params->width == -1)
+                param_str = "";
+            else
+                {
+                    params->precise = 1;
+                    param_str = " ";
+                }
+        }
+    }
+    else if (params->precise == -2 && ft_hex_is_zero(param_str) == 1)
+        param_str = "";
     precise = params -> precise;
     if (precise == -1)
     {
@@ -31,10 +55,7 @@ char *ft_hex_pad_zero(char *s, int len_zero_pad)
 {
     if (ft_strlen(s) <= 0)
         return (s);
-    if (*s == '-')
-        return (ft_strjoin("-", ft_concat_padding(++s, len_zero_pad, '0', 0)));
-    else
-        return (ft_concat_padding(s, len_zero_pad, '0', 0));
+    return (ft_concat_padding(s, len_zero_pad, '0', 0));
 }
 
 char *ft_format_hex_w(char *param_str, t_plist *params)

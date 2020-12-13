@@ -20,9 +20,7 @@ char *ft_format_int(char *param_str, t_plist *params)
         }
     }
     else if (params->precise == -2 && param_str[0] == '0')
-    {
         param_str = "";
-    }
     width = params->width;
     precise = params -> precise;
     if (precise == -1)

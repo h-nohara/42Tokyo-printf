@@ -70,11 +70,16 @@ char *ft_format_int_p(char *param_str, t_plist *params);
 char *ft_format_int_wp(char *param_str, t_plist *params);
 
 /* format hex */
+int ft_hex_is_zero(char *s);
 char *ft_hex_pad_zero(char *s, int len_zero_pad);
 char *ft_format_hex(char *param_str, t_plist *params);
 char *ft_format_hex_w(char *param_str, t_plist *params);
 char *ft_format_hex_p(char *param_str, t_plist *params);
 char *ft_format_hex_wp(char *param_str, t_plist *params);
+
+/* format ptr */
+char *ft_ptr_pad_zero(char *s, int len_zero_pad);
+char *ft_format_ptr(char *param_str, t_plist *params);
 
 /* hex */
 char *ft_convert_to_hex(int n, int is_upper);

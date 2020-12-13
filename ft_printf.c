@@ -81,6 +81,8 @@ char *ft_format(char *param_str, t_plist *params)
         return (ft_format_int(param_str, params));
     else if (type == 'x' || type == 'X')
         return (ft_format_hex(param_str, params));
+    else if (type == 'p')
+        return (ft_format_ptr(param_str, params));
     else
         return (ft_format_default(param_str, params));
 }
@@ -116,9 +118,9 @@ char *ft_translate_fmt(t_plist *params, va_list *args)
     {
         p = va_arg(*args, int*);
         if (p == NULL)
-            param_str = "0x";
+            param_str = "0";
         else
-            param_str = ft_strjoin("0x10", ft_convert_to_hex((int)p, 0));
+            param_str = ft_convert_to_hex((int)p, 0);
     }
     else if (params->type == '%')
         param_str = ft_strdup("%");
