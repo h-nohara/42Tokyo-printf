@@ -37,6 +37,11 @@ char *ft_detect_width(char *s, t_plist *params, va_list *args)
     if (*s == '*')
     {
         params->width = va_arg(*args, int);
+        if (params->width < 0)
+        {
+            params->width = -(params->width);
+            params->flag_minus = 1;
+        }
         ++s;
     }
     start = s;
@@ -59,6 +64,8 @@ char *ft_detect_precise(char *s, t_plist *params, va_list *args)
         if (*s == '*')
         {
             params->precise = va_arg(*args, int);
+            if (params->precise < 0)
+                params->precise = -1;
             found = 1;
             ++s;
         }
