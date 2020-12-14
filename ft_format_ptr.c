@@ -6,7 +6,7 @@
 /*   By: hnohara <hnohara@student.42tokyo.j>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 16:32:29 by hnohara           #+#    #+#             */
-/*   Updated: 2020/12/14 16:32:44 by hnohara          ###   ########.fr       */
+/*   Updated: 2020/12/14 18:33:23 by hnohara          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,10 @@ char	*ft_get_base_ptr_str(char *param_str, int precise)
 		else if (precise == -1)
 			return ("0x0");
 		else
-			return(ft_concat_padding("0x", precise, '0', 1));
-	} else {
+			return (ft_concat_padding("0x", precise, '0', 1));
+	}
+	else
+	{
 		len = ft_strlen(param_str);
 		if (precise > len)
 			return (ft_ptr_pad_zero(param_str, precise - len));

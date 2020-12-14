@@ -6,16 +6,16 @@
 /*   By: hnohara <hnohara@student.42tokyo.j>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 16:31:29 by hnohara           #+#    #+#             */
-/*   Updated: 2020/12/14 16:31:37 by hnohara          ###   ########.fr       */
+/*   Updated: 2020/12/14 18:39:17 by hnohara          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include <stdio.h>
 
-int	ft_printf(char *fmt, ...)
+int		ft_printf(char *fmt, ...)
 {
-	va_list	args;
+	va_list		args;
 	t_list		*lst;
 	t_list		*has_null;
 
@@ -46,9 +46,9 @@ char	ft_is_format_code(char c)
 
 char	*ft_get_format_result(char *s, t_list **lst, va_list *args, t_list **has_null)
 {
-	char		*tmp;
+	char	*tmp;
 	t_plist	*params;
-	char		*null_yn;
+	char	*null_yn;
 
 	if (*s != '%')
 		return (NULL);
@@ -73,7 +73,7 @@ char	*ft_format_default(char *param_str, t_plist *params)
 	t_fmt_len_info	*info;
 	char			*converted_org;
 	char			*res;
-	int			len_pad;
+	int				len_pad;
 
 	info = info_new();
 	info->len_org = ft_strlen(param_str);
@@ -120,7 +120,7 @@ char	*ft_translate_fmt(t_plist *params, va_list *args, char *is_contain_null)
 	char	*param_str;
 	char	*res;
 	void	*p;
-	int	c;
+	int		c;
 
 	if (params->type == 's')
 		param_str = ft_va_arg_s(args);

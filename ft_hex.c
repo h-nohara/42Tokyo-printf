@@ -6,13 +6,13 @@
 /*   By: hnohara <hnohara@student.42tokyo.j>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 16:30:57 by hnohara           #+#    #+#             */
-/*   Updated: 2020/12/14 16:34:20 by hnohara          ###   ########.fr       */
+/*   Updated: 2020/12/14 18:35:08 by hnohara          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static	int	get_hex_len(long n)
+static	int		get_hex_len(long n)
 {
 	int i;
 
@@ -31,8 +31,8 @@ char			*ft_convert_to_hex(long n, int is_upper)
 {
 	char	*hex_ord;
 	char	*res;
-	int	i;
-	int	size;
+	int		i;
+	int		size;
 
 	if (is_upper == 0)
 		hex_ord = "0123456789abcdef";

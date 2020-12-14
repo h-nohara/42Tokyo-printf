@@ -6,7 +6,7 @@
 /*   By: hnohara <hnohara@student.42tokyo.j>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 15:54:11 by hnohara           #+#    #+#             */
-/*   Updated: 2020/12/14 16:08:26 by hnohara          ###   ########.fr       */
+/*   Updated: 2020/12/14 18:34:31 by hnohara          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	*ft_format_hex(char *param_str, t_plist *params)
 		return (ft_format_hex_wp(param_str, params));
 }
 
-char *ft_hex_check_zero_precise(char *param_str, t_plist *params)
+char	*ft_hex_check_zero_precise(char *param_str, t_plist *params)
 {
 	int is_zero;
 

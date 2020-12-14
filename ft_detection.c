@@ -6,7 +6,7 @@
 /*   By: hnohara <hnohara@student.42tokyo.j>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 16:32:09 by hnohara           #+#    #+#             */
-/*   Updated: 2020/12/14 16:32:20 by hnohara          ###   ########.fr       */
+/*   Updated: 2020/12/14 18:31:15 by hnohara          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ char	*ft_detect_width(char *s, t_plist *params, va_list *args)
 char	*ft_detect_precise(char *s, t_plist *params, va_list *args)
 {
 	char	*start;
-	int	found;
+	int		found;
 
 	found = 0;
 	if (*s == '.')

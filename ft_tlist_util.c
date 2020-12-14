@@ -6,7 +6,7 @@
 /*   By: hnohara <hnohara@student.42tokyo.j>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 16:31:48 by hnohara           #+#    #+#             */
-/*   Updated: 2020/12/14 16:31:59 by hnohara          ###   ########.fr       */
+/*   Updated: 2020/12/14 18:37:19 by hnohara          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	ft_clear_tlist(t_list *lst)
 	ft_lstclear(&lst, &ft_free_one);
 }
 
-int	ft_lst_append(t_list **lst, void *content)
+int		ft_lst_append(t_list **lst, void *content)
 {
 	t_list *new_lst;
 
@@ -35,11 +35,11 @@ int	ft_lst_append(t_list **lst, void *content)
 	return (0);
 }
 
-int	ft_print_iter(t_list *lst, t_list *has_null)
+int		ft_print_iter(t_list *lst, t_list *has_null)
 {
-	int	n;
+	int		n;
 	char	*s;
-	int	len;
+	int		len;
 	char	c;
 
 	n = 0;

@@ -6,7 +6,7 @@
 /*   By: hnohara <hnohara@student.42tokyo.j>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 16:26:39 by hnohara           #+#    #+#             */
-/*   Updated: 2020/12/14 16:28:29 by hnohara          ###   ########.fr       */
+/*   Updated: 2020/12/14 18:36:17 by hnohara          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char			*ft_format_str(char *param_str, t_plist *params)
 	t_fmt_len_info	*info;
 	char			*converted_org;
 	char			*res;
-	int			len_pad;
+	int				len_pad;
 
 	info = info_new();
 	info->len_org = ft_strlen(param_str);
@@ -70,7 +70,9 @@ void			get_block_len_str(t_plist *params, t_fmt_len_info *info)
 		info->len_all = info->len_org_conv;
 		info->len_zero_padding = 0;
 		info->len_padding = 0;
-	} else {
+	}
+	else
+	{
 		info->len_all = width;
 		info->len_zero_padding = 0;
 		info->len_padding = info->len_all - info->len_org_conv;
