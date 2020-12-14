@@ -23,16 +23,31 @@ int ft_lst_append(t_list **lst, void *content)
     return (0);
 }
 
-int ft_print_iter(t_list *lst)
+int ft_print_iter(t_list *lst, t_list *has_null)
 {
     int n;
+    char *s;
+    int len;
+    char c;
 
     n = 0;
+    /* write(fd, s, len); */
     while (lst)
     {
-        ft_putstr_fd(lst->content, 1);
-        n += ft_strlen(lst->content);
+        s = (char*)(lst->content);
+        ft_putstr_fd(s, 1);
+        len = ft_strlen(lst->content);
+        n += len;
+        if (((char*)(has_null->content))[0] == 'y')
+        {
+            c = '\0';
+            write(1, &c, 1);
+            s += len + 1;
+            ft_putstr_fd(s, 1);
+            n += ft_strlen(s);
+        }
         lst = lst->next;
+        has_null = has_null->next;
     }
     return (n);
 }

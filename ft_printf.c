@@ -5,19 +5,23 @@ int ft_printf(char *fmt, ...)
 {
     va_list args;
     t_list *lst;
+    t_list *has_null;
 
     va_start(args, fmt);
 
     lst = ft_lstnew(ft_strdup(""));
-    if (!lst)
+    has_null = ft_lstnew(ft_strdup("n"));
+    if (!lst || !has_null)
         return (-1);
     while (1) {
         if ((fmt = ft_detect_percent(fmt, &lst)) == NULL)
             break ;
-        if ((fmt = ft_get_format_result(fmt, &lst, &args)) == NULL)
+        if (ft_lst_append(&has_null, "n") == -1)
+             break;
+        if ((fmt = ft_get_format_result(fmt, &lst, &args, &has_null)) == NULL)
             break ;
     }
-    return(ft_print_iter(lst));
+    return(ft_print_iter(lst, has_null));
     /*ft_clear_tlist(lst);*/
 }
 
@@ -30,10 +34,11 @@ char ft_is_format_code(char c)
 }
 
 
-char *ft_get_format_result(char *s, t_list **lst, va_list *args)
+char *ft_get_format_result(char *s, t_list **lst, va_list *args, t_list **has_null)
 {
     char *tmp;
     t_plist *params;
+    char *is_contain_null;
 
     if (*s != '%')
         return (NULL);
@@ -46,8 +51,9 @@ char *ft_get_format_result(char *s, t_list **lst, va_list *args)
         params->type = *(s++);
     else
         return (s);
-    tmp = ft_translate_fmt(params, args);
-    if (ft_lst_append(lst, tmp) == -1)
+    is_contain_null = ft_strdup("n");
+    tmp = ft_translate_fmt(params, args, is_contain_null);
+    if (ft_lst_append(lst, tmp) == -1 || ft_lst_append(has_null, is_contain_null))
         return (NULL);
     return (s);
 }
@@ -98,16 +104,22 @@ char *ft_va_arg_s(va_list *args)
         return (s);
 }
 
-char *ft_translate_fmt(t_plist *params, va_list *args)
+char *ft_translate_fmt(t_plist *params, va_list *args, char *is_contain_null)
 {
     char *param_str;
     char *res;
     void *p;
+    int c;
 
     if (params->type == 's')
         param_str = ft_va_arg_s(args);
     else if (params->type == 'c')
-        param_str = ft_ctos((char)va_arg(*args, int));
+    {
+        c = va_arg(*args, int);
+        if (c == 0)
+            *is_contain_null = 'y';
+        param_str = ft_ctos((char)c);
+    }
     else if (params->type == 'd' || params->type == 'i')
         param_str = ft_itoa(va_arg(*args, int));
     else if (params->type == 'u')
