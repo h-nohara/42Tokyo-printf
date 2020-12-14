@@ -31,7 +31,7 @@ t_fmt_len_info *info_new();
 int ft_printf(char *fmt, ...);
 char ft_is_format_code(char c);
 char *ft_go_to_percent(char *s, t_list **lst);
-char *ft_get_format_result(char *s, t_list **lst, va_list *args);
+char *ft_get_format_result(char *s, t_list **lst, va_list *args, t_list **has_null);
 
 char *ft_concat_padding(char *param_str, size_t len, char c, int is_left);
 
@@ -42,7 +42,7 @@ t_plist *ft_init_params();
 void ft_free_one(void *content);
 void ft_clear_tlist(t_list *lst);
 int ft_lst_append(t_list **lst, void *content);
-int ft_print_iter(t_list *lst);
+int ft_print_iter(t_list *lst, t_list *has_null);
 
 /* string_util */
 char *ft_ctos(char c);
@@ -62,7 +62,7 @@ void get_block_len_str(t_plist *params, t_fmt_len_info *info);
 /* format */
 char *convert_org_str(char *s, t_fmt_len_info *info);
 char *ft_format(char *param_str, t_plist *params);
-char *ft_translate_fmt(t_plist *plst, va_list *args);
+char *ft_translate_fmt(t_plist *plst, va_list *args, char *is_contain_null);
 
 /* format str */
 char *ft_format_str(char *param_str, t_plist *params);
