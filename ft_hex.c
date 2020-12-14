@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-static int get_hex_len(long n)
+static	int	get_hex_len(long n)
 {
 	int i;
 
@@ -27,12 +27,12 @@ static int get_hex_len(long n)
 	return (i);
 }
 
-char *ft_convert_to_hex(long n, int is_upper)
+char			*ft_convert_to_hex(long n, int is_upper)
 {
-	char *hex_ord;
-	char *res;
-	int i;
-	int size;
+	char	*hex_ord;
+	char	*res;
+	int	i;
+	int	size;
 
 	if (is_upper == 0)
 		hex_ord = "0123456789abcdef";

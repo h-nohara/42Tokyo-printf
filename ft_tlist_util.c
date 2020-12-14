@@ -12,19 +12,19 @@
 
 #include "ft_printf.h"
 
-void ft_free_one(void *content)
+void	ft_free_one(void *content)
 {
 	if (!content)
 		return ;
 	/*free(content);*/
 }
 
-void ft_clear_tlist(t_list *lst)
+void	ft_clear_tlist(t_list *lst)
 {
 	ft_lstclear(&lst, &ft_free_one);
 }
 
-int ft_lst_append(t_list **lst, void *content)
+int	ft_lst_append(t_list **lst, void *content)
 {
 	t_list *new_lst;
 
@@ -35,15 +35,14 @@ int ft_lst_append(t_list **lst, void *content)
 	return (0);
 }
 
-int ft_print_iter(t_list *lst, t_list *has_null)
+int	ft_print_iter(t_list *lst, t_list *has_null)
 {
-	int n;
-	char *s;
-	int len;
-	char c;
+	int	n;
+	char	*s;
+	int	len;
+	char	c;
 
 	n = 0;
-	/* write(fd, s, len); */
 	while (lst)
 	{
 		s = (char*)(lst->content);

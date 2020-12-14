@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-t_fmt_len_info	*info_new()
+t_fmt_len_info	*info_new(void)
 {
 	t_fmt_len_info *info;
 
@@ -27,22 +27,24 @@ t_fmt_len_info	*info_new()
 
 char			*ft_format_str(char *param_str, t_plist *params)
 {
-	t_fmt_len_info *info;
-	char *converted_org;
-	char *res;
+	t_fmt_len_info	*info;
+	char			*converted_org;
+	char			*res;
+	int			len_pad;
 
 	info = info_new();
 	info->len_org = ft_strlen(param_str);
 	get_block_len_str(params, info);
 	converted_org = convert_org_str(param_str, info);
-	if (info->len_padding <= 0)
+	len_pad = info->len_padding;
+	if (len_pad <= 0)
 		return (converted_org);
 	if (params->flag_minus == 1)
-		res = ft_concat_padding(converted_org, (size_t)(info->len_padding), ' ', 1);
+		res = ft_concat_padding(converted_org, (size_t)(len_pad), ' ', 1);
 	else if (params->flag_zero == 1)
-		res = ft_concat_padding(converted_org, (size_t)(info->len_padding), '0', 0);
+		res = ft_concat_padding(converted_org, (size_t)(len_pad), '0', 0);
 	else
-		res = ft_concat_padding(converted_org, (size_t)(info->len_padding), ' ', 0);
+		res = ft_concat_padding(converted_org, (size_t)(len_pad), ' ', 0);
 	return (res);
 }
 

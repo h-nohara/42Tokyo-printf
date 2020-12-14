@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-char *ft_detect_percent(char *s, t_list **lst)
+char	*ft_detect_percent(char *s, t_list **lst)
 {
 	char *start;
 	char *tmp;
@@ -29,7 +29,7 @@ char *ft_detect_percent(char *s, t_list **lst)
 	return (s);
 }
 
-char *ft_detect_flag(char *s, t_plist *params)
+char	*ft_detect_flag(char *s, t_plist *params)
 {
 	while (*s == '0' || *s == '-')
 	{
@@ -42,7 +42,7 @@ char *ft_detect_flag(char *s, t_plist *params)
 	return (s);
 }
 
-char *ft_detect_width(char *s, t_plist *params, va_list *args)
+char	*ft_detect_width(char *s, t_plist *params, va_list *args)
 {
 	char *start;
 
@@ -64,10 +64,10 @@ char *ft_detect_width(char *s, t_plist *params, va_list *args)
 	return (s);
 }
 
-char *ft_detect_precise(char *s, t_plist *params, va_list *args)
+char	*ft_detect_precise(char *s, t_plist *params, va_list *args)
 {
-	char *start;
-	int found;
+	char	*start;
+	int	found;
 
 	found = 0;
 	if (*s == '.')
@@ -84,11 +84,8 @@ char *ft_detect_precise(char *s, t_plist *params, va_list *args)
 		start = s;
 		while (ft_isdigit(*s))
 			++s;
-		if (s == start)
-		{
-			if (found == 0)
-				params->precise = -2;
-		}
+		if (s == start && found == 0)
+			params->precise = -2;
 		else
 			params->precise = ft_atoi(ft_substr(start, 0, s - start));
 	}

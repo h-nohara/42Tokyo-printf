@@ -34,7 +34,7 @@ static		int		ft_get_rank(long n)
 	{
 		++rank;
 		if (ft_pow(10, rank) > LONG_MAX / 10)
-			break;
+			break ;
 	}
 	return (rank);
 }
@@ -70,11 +70,11 @@ char				*ft_long_itoa(long n)
 	char	*res;
 	int		size;
 
-    if (n == 0)
+	if (n == 0)
 		return ("0");
-    if (n > 0)
+	if (n > 0)
 		rank = ft_get_rank(n);
-    else
+	else
 		rank = ft_get_rank((n / 10) * -1) + 1;
 	size = n > 0 ? rank + 2 : rank + 3;
 	res = (char*)malloc(size);

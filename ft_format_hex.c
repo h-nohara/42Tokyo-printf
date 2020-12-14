@@ -17,24 +17,8 @@ char	*ft_format_hex(char *param_str, t_plist *params)
 	int width;
 	int precise;
 
+	param_str = ft_hex_check_zero_precise(param_str, params);
 	width = params->width;
-	if (params->precise == 0)
-	{
-		if (ft_hex_is_zero(param_str) == 0)
-			params->precise = 1;
-		else
-		{
-			if (params->width == -1)
-				param_str = "";
-			else
-			{
-				params->precise = 1;
-				param_str = " ";
-			}
-		}
-	}
-	else if (params->precise == -2 && ft_hex_is_zero(param_str) == 1)
-		param_str = "";
 	precise = params->precise;
 	if (precise == -1)
 	{
@@ -54,6 +38,31 @@ char	*ft_format_hex(char *param_str, t_plist *params)
 		return (ft_format_hex_p(param_str, params));
 	else
 		return (ft_format_hex_wp(param_str, params));
+}
+
+char *ft_hex_check_zero_precise(char *param_str, t_plist *params)
+{
+	int is_zero;
+
+	is_zero = ft_hex_is_zero(param_str);
+	if (params->precise == 0)
+	{
+		if (is_zero == 0)
+			params->precise = 1;
+		else
+		{
+			if (params->width == -1)
+				return ("");
+			else
+			{
+				params->precise = 1;
+				return (" ");
+			}
+		}
+	}
+	else if (params->precise == -2 && is_zero == 1)
+		return ("");
+	return (param_str);
 }
 
 char	*ft_hex_pad_zero(char *s, int len_zero_pad)

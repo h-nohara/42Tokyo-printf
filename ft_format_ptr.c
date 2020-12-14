@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-char *ft_ptr_pad_zero(char *s, int len_zero_pad)
+char	*ft_ptr_pad_zero(char *s, int len_zero_pad)
 {
 	if (ft_strlen(s) <= 0 || len_zero_pad <= 0)
 		return (s);
@@ -21,32 +21,42 @@ char *ft_ptr_pad_zero(char *s, int len_zero_pad)
 	return (s);
 }
 
-char *ft_format_ptr(char *param_str, t_plist *params)
+char	*ft_format_ptr(char *param_str, t_plist *params)
 {
 	int width;
-	int precise;
 	int len;
+	int flag;
 
 	width = params->width;
-	precise = params->precise;
+	param_str = ft_get_base_ptr_str(param_str, params->precise);
+	len = ft_strlen(param_str);
+	if (len >= width)
+		return (param_str);
+	else
+	{
+		flag = params->flag_minus;
+		return (ft_concat_padding(param_str, width - len, ' ', flag));
+	}
+}
+
+char	*ft_get_base_ptr_str(char *param_str, int precise)
+{
+	int len;
+
 	if (ft_strlen(param_str) == 1 && param_str[0] == '0')
 	{
 		if (precise == -2 || precise == 0)
-			param_str = "0x";
+			return ("0x");
 		else if (precise == -1)
-			param_str = "0x0";
+			return ("0x0");
 		else
-			param_str = ft_concat_padding("0x", precise, '0', 1);
+			return(ft_concat_padding("0x", precise, '0', 1));
 	} else {
 		len = ft_strlen(param_str);
 		if (precise > len)
-			param_str = ft_ptr_pad_zero(param_str, precise - len);
+			return (ft_ptr_pad_zero(param_str, precise - len));
 		else
-			param_str = ft_strjoin("0x", param_str);
+			return (ft_strjoin("0x", param_str));
 	}
-	len = ft_strlen(param_str);
-	if (len >= width)
-		return(param_str);
-	else
-		return (ft_concat_padding(param_str, width - len, ' ', params->flag_minus));
+	return (param_str);
 }

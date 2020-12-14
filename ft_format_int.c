@@ -12,29 +12,14 @@
 
 #include "ft_printf.h"
 
-char *ft_format_int(char *param_str, t_plist *params)
+char	*ft_format_int(char *param_str, t_plist *params)
 {
 	int width;
 	int precise;
 
-	if (params->precise == 0)
-	{
-		if (param_str[0] != '0')
-			params->precise = 1;
-		else {
-			if (params->width == -1)
-				param_str = "";
-			else
-			{
-				params->precise = 1;
-				param_str = " ";
-			}
-		}
-	}
-	else if (params->precise == -2 && param_str[0] == '0')
-		param_str = "";
+	param_str = ft_int_check_zero_precise(param_str, params);
 	width = params->width;
-	precise = params -> precise;
+	precise = params->precise;
 	if (precise == -1)
 	{
 		if (width == -1)
@@ -55,7 +40,29 @@ char *ft_format_int(char *param_str, t_plist *params)
 		return (ft_format_int_wp(param_str, params));
 }
 
-char *ft_int_pad_zero(char *s, int len_zero_pad)
+char	*ft_int_check_zero_precise(char *param_str, t_plist *params)
+{
+	if (params->precise == 0)
+	{
+		if (param_str[0] != '0')
+			params->precise = 1;
+		else
+		{
+			if (params->width == -1)
+				return ("");
+			else
+			{
+				params->precise = 1;
+				return (" ");
+			}
+		}
+	}
+	else if (params->precise == -2 && param_str[0] == '0')
+		return ("");
+	return (param_str);
+}
+
+char	*ft_int_pad_zero(char *s, int len_zero_pad)
 {
 	if (ft_strlen(s) <= 0)
 		return (s);
@@ -65,10 +72,11 @@ char *ft_int_pad_zero(char *s, int len_zero_pad)
 		return (ft_concat_padding(s, len_zero_pad, '0', 0));
 }
 
-char *ft_format_int_w(char *param_str, t_plist *params)
+char	*ft_format_int_w(char *param_str, t_plist *params)
 {
 	int len;
 	int len_padding;
+	int flag;
 
 	len = ft_strlen(param_str);
 	if (len >= params->width)
@@ -78,11 +86,12 @@ char *ft_format_int_w(char *param_str, t_plist *params)
 		len_padding = params->width - len;
 		if ((params->flag_zero == 1) && (params->flag_minus == 0))
 			return (ft_int_pad_zero(param_str, len_padding));
-		return (ft_concat_padding(param_str, len_padding, ' ', params->flag_minus == 1));
+		flag = params->flag_minus;
+		return (ft_concat_padding(param_str, len_padding, ' ', flag));
 	}
 }
 
-char *ft_format_int_p(char *param_str, t_plist *params)
+char	*ft_format_int_p(char *param_str, t_plist *params)
 {
 	int precise;
 	int len_base;
@@ -98,27 +107,27 @@ char *ft_format_int_p(char *param_str, t_plist *params)
 	return (ft_int_pad_zero(param_str, len_zero_pad));
 }
 
-char *ft_format_int_wp(char *s, t_plist *params)
+char	*ft_format_int_wp(char *s, t_plist *p)
 {
 	int precise;
 	int len;
-	int len_base;
+	int l;
 	int is_neg;
 
-	precise = params->precise;
+	precise = p->precise;
 	is_neg = *s == '-';
 	len = ft_strlen(s);
-	len_base = is_neg ? len - 1 : len;
-	if (len_base < precise)
+	l = is_neg ? len - 1 : len;
+	if (l < precise)
 	{
 		if (is_neg == 1)
-			s = ft_strjoin("-", ft_concat_padding(++s, precise - len_base, '0', 0));
+			s = ft_strjoin("-", ft_concat_padding(++s, precise - l, '0', 0));
 		else
 			s = ft_concat_padding(s, precise - len, '0', 0);
 		len = ft_strlen(s);
 	}
-	if (params->width <= len)
+	if (p->width <= len)
 		return (s);
 	else
-		return (ft_concat_padding(s, params->width - len, ' ', params->flag_minus == 1));
+		return (ft_concat_padding(s, p->width - len, ' ', p->flag_minus == 1));
 }
