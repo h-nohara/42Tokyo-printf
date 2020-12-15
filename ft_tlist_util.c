@@ -16,7 +16,6 @@ void	ft_free_one(void *content)
 {
 	if (!content)
 		return ;
-	/*free(content);*/
 }
 
 void	ft_clear_tlist(t_list *lst)

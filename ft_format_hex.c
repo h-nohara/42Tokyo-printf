@@ -65,17 +65,10 @@ char	*ft_hex_check_zero_precise(char *param_str, t_plist *params)
 	return (param_str);
 }
 
-char	*ft_hex_pad_zero(char *s, int len_zero_pad)
-{
-	if (ft_strlen(s) <= 0)
-		return (s);
-	return (ft_concat_padding(s, len_zero_pad, '0', 0));
-}
-
 char	*ft_format_hex_w(char *param_str, t_plist *params)
 {
 	int len;
-	int len_padding;
+	int len_pad;
 	int flag;
 
 	len = ft_strlen(param_str);
@@ -83,11 +76,16 @@ char	*ft_format_hex_w(char *param_str, t_plist *params)
 		return (param_str);
 	else
 	{
-		len_padding = params->width - len;
+		len_pad = params->width - len;
 		if ((params->flag_zero == 1) && (params->flag_minus == 0))
-			return (ft_hex_pad_zero(param_str, len_padding));
+		{
+			if (len > 0)
+				return (ft_concat_padding(param_str, len_pad, '0', 0));
+			else
+				return (param_str);
+		}
 		flag = params->flag_minus;
-		return (ft_concat_padding(param_str, len_padding, ' ', flag));
+		return (ft_concat_padding(param_str, len_pad, ' ', flag));
 	}
 }
 
@@ -102,13 +100,17 @@ char	*ft_format_hex_p(char *param_str, t_plist *params)
 	if (len >= precise)
 		return (param_str);
 	len_zero_pad = precise - len;
-	return (ft_hex_pad_zero(param_str, len_zero_pad));
+	if (len > 0)
+		return (ft_concat_padding(param_str, len_zero_pad, '0', 0));
+	else
+		return (param_str);
 }
 
 char	*ft_format_hex_wp(char *s, t_plist *params)
 {
 	int precise;
 	int len;
+	int flag;
 
 	precise = params->precise;
 	len = ft_strlen(s);
@@ -120,5 +122,8 @@ char	*ft_format_hex_wp(char *s, t_plist *params)
 	if (params->width <= len)
 		return (s);
 	else
-		return (ft_concat_padding(s, params->width - len, ' ', params->flag_minus == 1));
+	{
+		flag = params->flag_minus == 1;
+		return (ft_concat_padding(s, params->width - len, ' ', flag));
+	}
 }

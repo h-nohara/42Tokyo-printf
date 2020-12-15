@@ -48,21 +48,21 @@ char			*ft_format_str(char *param_str, t_plist *params)
 	return (res);
 }
 
-void			get_block_len_str(t_plist *params, t_fmt_len_info *info)
+void			get_block_len_str(t_plist *p, t_fmt_len_info *info)
 {
 	int len_org;
 	int width;
 	int precise;
 
 	len_org = info->len_org;
-	width = params->width;
-	precise = params->precise;
+	width = p->width;
+	precise = p->precise;
 	width = (width == -1) ? 0 : width;
 	if (precise == -1)
 		precise = len_org;
-	else if (precise == -2 && params->type == 's')
+	else if (precise == -2 && p->type == 's')
 		precise = 0;
-	else if (precise == -2 && (params->type == 'c' || params->type == '%'))
+	else if (precise == -2 && (p->type == 'c' || p->type == '%'))
 		precise = 1;
 	info->len_org_conv = (precise > len_org) ? len_org : precise;
 	if (info->len_org_conv >= width)

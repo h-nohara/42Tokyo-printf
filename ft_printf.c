@@ -33,7 +33,7 @@ int		ft_printf(char *fmt, ...)
 		if ((fmt = ft_get_format_result(fmt, &lst, &args, &has_null)) == NULL)
 			break ;
 	}
-	return (ft_print_iter(lst, has_null)); /*ft_clear_tlist(lst);*/
+	return (ft_print_iter(lst, has_null));
 }
 
 char	ft_is_format_code(char c)
@@ -63,6 +63,7 @@ char	*ft_get_format_result(char *s, t_list **lst, va_list *args, t_list **has_nu
 		return (s);
 	null_yn = ft_strdup("n");
 	tmp = ft_translate_fmt(params, args, null_yn);
+	tmp = ft_format(tmp, params);
 	if (ft_lst_append(lst, tmp) == -1 || ft_lst_append(has_null, null_yn))
 		return (NULL);
 	return (s);
@@ -104,22 +105,9 @@ char	*ft_format(char *param_str, t_plist *params)
 		return (ft_format_default(param_str, params));
 }
 
-char	*ft_va_arg_s(va_list *args)
-{
-	char *s;
-
-	s = va_arg(*args, char*);
-	if (!s)
-		return ("(null)");
-	else
-		return (s);
-}
-
 char	*ft_translate_fmt(t_plist *params, va_list *args, char *is_contain_null)
 {
 	char	*param_str;
-	char	*res;
-	void	*p;
 	int		c;
 
 	if (params->type == 's')
@@ -138,19 +126,12 @@ char	*ft_translate_fmt(t_plist *params, va_list *args, char *is_contain_null)
 	else if (params->type == 'x' || params->type == 'X')
 		param_str = ft_convert_to_hex(va_arg(*args, long), params->type == 'X');
 	else if (params->type == 'p')
-	{
-		p = va_arg(*args, void*);
-		if (p == NULL)
-			param_str = "0";
-		else
-			param_str = ft_convert_to_hex((int64_t)p, 0);
-	}
+		param_str = ft_va_arg_p(args);
 	else if (params->type == '%')
 		param_str = ft_strdup("%");
 	else
 		param_str = ft_strdup("");
-	res = ft_format(param_str, params);
-	return (res);
+	return (param_str);
 }
 
 char	*convert_org_str(char *s, t_fmt_len_info *info)
