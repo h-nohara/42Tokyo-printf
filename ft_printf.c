@@ -69,25 +69,6 @@ char	*ft_get_format_result(char *s, t_list **lst, va_list *args, t_list **has_nu
 	return (s);
 }
 
-char	*ft_format_default(char *param_str, t_plist *params)
-{
-	t_fmt_len_info	*info;
-	char			*converted_org;
-	char			*res;
-	int				len_pad;
-
-	info = info_new();
-	info->len_org = ft_strlen(param_str);
-	get_block_len_str(params, info);
-	converted_org = convert_org_str(param_str, info);
-	len_pad = info->len_padding;
-	if (len_pad <= 0)
-		return (converted_org);
-	else
-		res = ft_concat_padding(converted_org, (size_t)(len_pad), ' ', params->flag_minus);
-	return (res);
-}
-
 char	*ft_format(char *param_str, t_plist *params)
 {
 	char type;
@@ -101,8 +82,7 @@ char	*ft_format(char *param_str, t_plist *params)
 		return (ft_format_hex(param_str, params));
 	else if (type == 'p')
 		return (ft_format_ptr(param_str, params));
-	else
-		return (ft_format_default(param_str, params));
+	return (param_str);
 }
 
 char	*ft_translate_fmt(t_plist *params, va_list *args, char *is_contain_null)
