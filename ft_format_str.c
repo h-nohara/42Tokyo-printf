@@ -6,7 +6,7 @@
 /*   By: hnohara <hnohara@student.42tokyo.j>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 16:26:39 by hnohara           #+#    #+#             */
-/*   Updated: 2020/12/15 21:08:11 by hnohara          ###   ########.fr       */
+/*   Updated: 2020/12/15 21:16:17 by hnohara          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,13 +70,11 @@ void			ft_get_len_s(t_plist *p, t_fmt_len_info *info)
 		info->len_all = info->len_org_conv;
 		info->len_zero_padding = 0;
 		info->len_padding = 0;
+		return ;
 	}
-	else
-	{
-		info->len_all = width;
-		info->len_zero_padding = 0;
-		info->len_padding = info->len_all - info->len_org_conv;
-	}
+	info->len_all = width;
+	info->len_zero_padding = 0;
+	info->len_padding = info->len_all - info->len_org_conv;
 }
 
 char			*convert_org_str(char *s, t_fmt_len_info *info)
