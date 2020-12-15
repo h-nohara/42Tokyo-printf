@@ -86,7 +86,7 @@ char	*ft_detect_precise(char *s, t_plist *params, va_list *args)
 			++s;
 		if (s == start && found == 0)
 			params->precise = -2;
-		else
+		else if (s != start)
 			params->precise = ft_atoi(ft_substr(start, 0, s - start));
 	}
 	return (s);
