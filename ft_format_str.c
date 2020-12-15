@@ -78,3 +78,18 @@ void			get_block_len_str(t_plist *p, t_fmt_len_info *info)
 		info->len_padding = info->len_all - info->len_org_conv;
 	}
 }
+
+char	*convert_org_str(char *s, t_fmt_len_info *info)
+{
+	int len_org;
+	int len_org_conv;
+
+	len_org = info->len_org;
+	len_org_conv = info->len_org_conv;
+	if (len_org_conv == len_org)
+		return (ft_strdup(s));
+	else if (len_org_conv < len_org)
+		return (ft_substr(s, 0, info->len_org_conv));
+	else
+		return (ft_concat_padding(s, info->len_zero_padding, '0', 0));
+}

@@ -42,8 +42,9 @@ ft_printf
 */
 int				ft_printf(char *fmt, ...);
 char			ft_is_format_code(char c);
-char			*ft_go_to_percent(char *s, t_list **lst);
-char			*ft_get_format_result(char *s, t_list **lst, va_list *args, t_list **has_null);
+char			*ft_format(char *param_str, t_plist *params);
+char			*ft_get_arg(char type, va_list *args, char *is_contain_null);
+char			*ft_proc_format(char *s, t_list **lst, va_list *args, t_list **has_null);
 
 /*
 ft_va_arg_wrapper
@@ -85,18 +86,12 @@ char			*ft_detect_width(char *s, t_plist *params, va_list *args);
 char			*ft_detect_precise(char *s, t_plist *params, va_list *args);
 
 /*
-format
-*/
-char			*convert_org_str(char *s, t_fmt_len_info *info);
-char			*ft_format(char *param_str, t_plist *params);
-char			*ft_translate_fmt(t_plist *plst, va_list *args, char *is_contain_null);
-
-/*
 format str
 */
 t_fmt_len_info	*info_new();
 char			*ft_format_str(char *param_str, t_plist *params);
 void			get_block_len_str(t_plist *params, t_fmt_len_info *info);
+char			*convert_org_str(char *s, t_fmt_len_info *info);
 
 /*
 format int

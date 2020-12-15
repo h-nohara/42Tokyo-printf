@@ -30,7 +30,7 @@ int		ft_printf(char *fmt, ...)
 			break ;
 		if (ft_lst_append(&has_null, "n") == -1)
 			break ;
-		if ((fmt = ft_get_format_result(fmt, &lst, &args, &has_null)) == NULL)
+		if ((fmt = ft_proc_format(fmt, &lst, &args, &has_null)) == NULL)
 			break ;
 	}
 	return (ft_print_iter(lst, has_null));
@@ -44,7 +44,7 @@ char	ft_is_format_code(char c)
 	return (0);
 }
 
-char	*ft_get_format_result(char *s, t_list **lst, va_list *args, t_list **has_null)
+char	*ft_proc_format(char *s, t_list **lst, va_list *args, t_list **has_null)
 {
 	char	*tmp;
 	t_plist	*params;
@@ -62,7 +62,7 @@ char	*ft_get_format_result(char *s, t_list **lst, va_list *args, t_list **has_nu
 	else
 		return (s);
 	null_yn = ft_strdup("n");
-	tmp = ft_translate_fmt(params, args, null_yn);
+	tmp = ft_get_arg(params->type, args, null_yn);
 	tmp = ft_format(tmp, params);
 	if (ft_lst_append(lst, tmp) == -1 || ft_lst_append(has_null, null_yn))
 		return (NULL);
@@ -85,46 +85,31 @@ char	*ft_format(char *param_str, t_plist *params)
 	return (param_str);
 }
 
-char	*ft_translate_fmt(t_plist *params, va_list *args, char *is_contain_null)
+char	*ft_get_arg(char type, va_list *args, char *is_contain_null)
 {
 	char	*param_str;
 	int		c;
 
-	if (params->type == 's')
+	if (type == 's')
 		param_str = ft_va_arg_s(args);
-	else if (params->type == 'c')
+	else if (type == 'c')
 	{
 		c = va_arg(*args, int);
 		if (c == 0)
 			*is_contain_null = 'y';
 		param_str = ft_ctos((char)c);
 	}
-	else if (params->type == 'd' || params->type == 'i')
+	else if (type == 'd' || type == 'i')
 		param_str = ft_itoa(va_arg(*args, int));
-	else if (params->type == 'u')
+	else if (type == 'u')
 		param_str = ft_long_itoa(va_arg(*args, unsigned int));
-	else if (params->type == 'x' || params->type == 'X')
-		param_str = ft_convert_to_hex(va_arg(*args, long), params->type == 'X');
-	else if (params->type == 'p')
+	else if (type == 'x' || type == 'X')
+		param_str = ft_convert_to_hex(va_arg(*args, long), type == 'X');
+	else if (type == 'p')
 		param_str = ft_va_arg_p(args);
-	else if (params->type == '%')
+	else if (type == '%')
 		param_str = ft_strdup("%");
 	else
 		param_str = ft_strdup("");
 	return (param_str);
-}
-
-char	*convert_org_str(char *s, t_fmt_len_info *info)
-{
-	int len_org;
-	int len_org_conv;
-
-	len_org = info->len_org;
-	len_org_conv = info->len_org_conv;
-	if (len_org_conv == len_org)
-		return (ft_strdup(s));
-	else if (len_org_conv < len_org)
-		return (ft_substr(s, 0, info->len_org_conv));
-	else
-		return (ft_concat_padding(s, info->len_zero_padding, '0', 0));
 }
