@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-char	*ft_detect_percent(char *s, t_list **lst)
+char	*ft_detect_percent(char *s, t_str_lst **lst)
 {
 	char *start;
 	char *tmp;
@@ -23,7 +23,7 @@ char	*ft_detect_percent(char *s, t_list **lst)
 	if (start != s)
 	{
 		tmp = ft_substr(start, 0, s - start);
-		if (ft_lst_append(lst, tmp) == -1)
+		if (ft_strlst_append(lst, tmp, 0) == -1)
 			return (NULL);
 	}
 	return (s);

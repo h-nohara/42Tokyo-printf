@@ -18,23 +18,23 @@ void	ft_free_one(void *content)
 		return ;
 }
 
-void	ft_clear_tlist(t_list *lst)
+void	ft_free_strlist(t_str_lst *lst)
 {
-	ft_lstclear(&lst, &ft_free_one);
+	ft_strlst_clear(&lst, &ft_free_one);
 }
 
-int		ft_lst_append(t_list **lst, void *content)
+int		ft_strlst_append(t_str_lst **lst, char *s, int has_null)
 {
-	t_list *new_lst;
+	t_str_lst *new_lst;
 
-	new_lst = ft_lstnew(content);
+	new_lst = ft_strlst_new(s, has_null);
 	if (!new_lst)
 		return (-1);
-	ft_lstadd_back(lst, new_lst);
+	ft_strlst_add_back(lst, new_lst);
 	return (0);
 }
 
-int		ft_print_iter(t_list *lst, t_list *has_null)
+int		ft_print_iter(t_str_lst *lst)
 {
 	int		n;
 	char	*s;
@@ -44,11 +44,11 @@ int		ft_print_iter(t_list *lst, t_list *has_null)
 	n = 0;
 	while (lst)
 	{
-		s = (char*)(lst->content);
+		s = (char*)(lst->s);
 		ft_putstr_fd(s, 1);
-		len = ft_strlen(lst->content);
+		len = ft_strlen(lst->s);
 		n += len;
-		if (((char*)(has_null->content))[0] == 'y')
+		if (lst->has_null == 1)
 		{
 			c = '\0';
 			write(1, &c, 1);
@@ -57,7 +57,6 @@ int		ft_print_iter(t_list *lst, t_list *has_null)
 			n += ft_strlen(s);
 		}
 		lst = lst->next;
-		has_null = has_null->next;
 	}
 	return (n);
 }

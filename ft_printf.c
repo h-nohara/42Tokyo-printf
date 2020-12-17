@@ -15,24 +15,20 @@
 int		ft_printf(char *fmt, ...)
 {
 	va_list		args;
-	t_list		*lst;
-	t_list		*has_null;
+	t_str_lst		*lst;
 
 	va_start(args, fmt);
-	lst = ft_lstnew(ft_strdup(""));
-	has_null = ft_lstnew(ft_strdup("n"));
-	if (!lst || !has_null)
+	lst = ft_strlst_new("", 0);
+	if (!lst)
 		return (-1);
 	while (1)
 	{
 		if ((fmt = ft_detect_percent(fmt, &lst)) == NULL)
 			break ;
-		if (ft_lst_append(&has_null, "n") == -1)
-			break ;
-		if ((fmt = ft_proc_format(fmt, &lst, &args, &has_null)) == NULL)
+		if ((fmt = ft_proc_format(fmt, &lst, &args)) == NULL)
 			break ;
 	}
-	return (ft_print_iter(lst, has_null));
+	return (ft_print_iter(lst));
 }
 
 char	ft_is_format_code(char c)
@@ -43,11 +39,11 @@ char	ft_is_format_code(char c)
 	return (0);
 }
 
-char	*ft_proc_format(char *s, t_list **lst, va_list *args, t_list **has_null)
+char	*ft_proc_format(char *s, t_str_lst **lst, va_list *args)
 {
 	char	*tmp;
 	t_params	*params;
-	char	*null_yn;
+	int	has_null;
 
 	if (*s != '%')
 		return (NULL);
@@ -60,10 +56,10 @@ char	*ft_proc_format(char *s, t_list **lst, va_list *args, t_list **has_null)
 		params->type = *(s++);
 	else
 		return (s);
-	null_yn = ft_strdup("n");
-	tmp = ft_get_arg(params->type, args, null_yn);
+	has_null = 0;
+	tmp = ft_get_arg(params->type, args, &has_null);
 	tmp = ft_format(tmp, params);
-	if (ft_lst_append(lst, tmp) == -1 || ft_lst_append(has_null, null_yn))
+	if (ft_strlst_append(lst, tmp, has_null) == -1)
 		return (NULL);
 	return (s);
 }
@@ -84,7 +80,7 @@ char	*ft_format(char *param_str, t_params *params)
 	return (param_str);
 }
 
-char	*ft_get_arg(char type, va_list *args, char *is_contain_null)
+char	*ft_get_arg(char type, va_list *args, int *has_null)
 {
 	char	*param_str;
 	int		c;
@@ -95,7 +91,7 @@ char	*ft_get_arg(char type, va_list *args, char *is_contain_null)
 	{
 		c = va_arg(*args, int);
 		if (c == 0)
-			*is_contain_null = 'y';
+			*has_null = 1;
 		param_str = ft_ctos((char)c);
 	}
 	else if (type == 'd' || type == 'i')
