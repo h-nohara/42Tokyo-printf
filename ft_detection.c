@@ -29,7 +29,7 @@ char	*ft_detect_percent(char *s, t_list **lst)
 	return (s);
 }
 
-char	*ft_detect_flag(char *s, t_plist *params)
+char	*ft_detect_flag(char *s, t_params *params)
 {
 	while (*s == '0' || *s == '-')
 	{
@@ -42,7 +42,7 @@ char	*ft_detect_flag(char *s, t_plist *params)
 	return (s);
 }
 
-char	*ft_detect_width(char *s, t_plist *params, va_list *args)
+char	*ft_detect_width(char *s, t_params *params, va_list *args)
 {
 	char *start;
 
@@ -64,7 +64,7 @@ char	*ft_detect_width(char *s, t_plist *params, va_list *args)
 	return (s);
 }
 
-char	*ft_detect_precise(char *s, t_plist *params, va_list *args)
+char	*ft_detect_precise(char *s, t_params *params, va_list *args)
 {
 	char	*start;
 	int		found;

@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_plist_util.c                                    :+:      :+:    :+:   */
+/*   ft_params_util.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hnohara <hnohara@student.42tokyo.j>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,11 +12,11 @@
 
 #include "ft_printf.h"
 
-t_plist	*ft_init_params(void)
+t_params	*ft_init_params(void)
 {
-	t_plist *lst;
+	t_params *lst;
 
-	lst = (t_plist*)malloc(sizeof(t_plist));
+	lst = (t_params*)malloc(sizeof(t_params));
 	if (!lst)
 		return (NULL);
 	lst->flag_zero = 0;

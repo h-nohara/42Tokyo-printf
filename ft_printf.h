@@ -19,14 +19,14 @@
 # include <stdint.h>
 # include <limits.h>
 
-typedef	struct	s_plist
+typedef	struct	s_params
 {
 	int		flag_zero;
 	int		flag_minus;
 	int		width;
 	int		precise;
 	char	type;
-}				t_plist;
+}				t_params;
 
 typedef	struct	s_fmt_len_info
 {
@@ -43,7 +43,7 @@ typedef	struct	s_fmt_len_info
 
 int				ft_printf(char *fmt, ...);
 char			ft_is_format_code(char c);
-char			*ft_format(char *param_str, t_plist *params);
+char			*ft_format(char *param_str, t_params *params);
 char			*ft_get_arg(char type, va_list *args, char *is_contain_null);
 char			*ft_proc_format(char *s, t_list **l1, va_list *va, t_list **l2);
 
@@ -56,7 +56,7 @@ char			*ft_va_arg_p(va_list *args);
 /*
 ** plist_util
 */
-t_plist			*ft_init_params();
+t_params			*ft_init_params();
 
 /*
 ** tlist_util
@@ -82,42 +82,42 @@ char			*ft_long_itoa(long n);
 ** detection
 */
 char			*ft_detect_percent(char *s, t_list **lst);
-char			*ft_detect_flag(char *s, t_plist *params);
-char			*ft_detect_width(char *s, t_plist *params, va_list *args);
-char			*ft_detect_precise(char *s, t_plist *p, va_list *args);
+char			*ft_detect_flag(char *s, t_params *params);
+char			*ft_detect_width(char *s, t_params *params, va_list *args);
+char			*ft_detect_precise(char *s, t_params *p, va_list *args);
 
 /*
 ** format str
 */
 t_fmt_len_info	*info_new();
-char			*ft_format_str(char *param_str, t_plist *params);
-void			ft_get_len_s(t_plist *params, t_fmt_len_info *info);
+char			*ft_format_str(char *param_str, t_params *params);
+void			ft_get_len_s(t_params *params, t_fmt_len_info *info);
 char			*convert_org_str(char *s, t_fmt_len_info *info);
 
 /*
 ** format int
 */
 char			*ft_int_pad_zero(char *s, int len_zero_pad);
-char			*ft_format_int(char *param_str, t_plist *params);
-char			*ft_int_check_zero_precise(char *param_str, t_plist *params);
-char			*ft_format_int_w(char *param_str, t_plist *params);
-char			*ft_format_int_p(char *param_str, t_plist *params);
-char			*ft_format_int_wp(char *param_str, t_plist *params);
+char			*ft_format_int(char *param_str, t_params *params);
+char			*ft_int_check_zero_precise(char *param_str, t_params *params);
+char			*ft_format_int_w(char *param_str, t_params *params);
+char			*ft_format_int_p(char *param_str, t_params *params);
+char			*ft_format_int_wp(char *param_str, t_params *params);
 
 /*
 ** format hex
 */
-char			*ft_format_hex(char *param_str, t_plist *params);
-char			*ft_hex_check_zero_precise(char *param_str, t_plist *params);
-char			*ft_format_hex_w(char *param_str, t_plist *params);
-char			*ft_format_hex_p(char *param_str, t_plist *params);
-char			*ft_format_hex_wp(char *param_str, t_plist *params);
+char			*ft_format_hex(char *param_str, t_params *params);
+char			*ft_hex_check_zero_precise(char *param_str, t_params *params);
+char			*ft_format_hex_w(char *param_str, t_params *params);
+char			*ft_format_hex_p(char *param_str, t_params *params);
+char			*ft_format_hex_wp(char *param_str, t_params *params);
 
 /*
 ** format ptr
 */
 char			*ft_ptr_pad_zero(char *s, int len_zero_pad);
-char			*ft_format_ptr(char *param_str, t_plist *params);
+char			*ft_format_ptr(char *param_str, t_params *params);
 char			*ft_get_base_ptr_str(char *param_str, int precise);
 
 /*

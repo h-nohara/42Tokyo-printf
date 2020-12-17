@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-char	*ft_format_hex(char *param_str, t_plist *params)
+char	*ft_format_hex(char *param_str, t_params *params)
 {
 	int width;
 	int precise;
@@ -40,7 +40,7 @@ char	*ft_format_hex(char *param_str, t_plist *params)
 		return (ft_format_hex_wp(param_str, params));
 }
 
-char	*ft_hex_check_zero_precise(char *param_str, t_plist *params)
+char	*ft_hex_check_zero_precise(char *param_str, t_params *params)
 {
 	int is_zero;
 
@@ -65,7 +65,7 @@ char	*ft_hex_check_zero_precise(char *param_str, t_plist *params)
 	return (param_str);
 }
 
-char	*ft_format_hex_w(char *param_str, t_plist *params)
+char	*ft_format_hex_w(char *param_str, t_params *params)
 {
 	int len;
 	int len_pad;
@@ -89,7 +89,7 @@ char	*ft_format_hex_w(char *param_str, t_plist *params)
 	}
 }
 
-char	*ft_format_hex_p(char *param_str, t_plist *params)
+char	*ft_format_hex_p(char *param_str, t_params *params)
 {
 	int precise;
 	int len;
@@ -106,7 +106,7 @@ char	*ft_format_hex_p(char *param_str, t_plist *params)
 		return (param_str);
 }
 
-char	*ft_format_hex_wp(char *s, t_plist *params)
+char	*ft_format_hex_wp(char *s, t_params *params)
 {
 	int precise;
 	int len;

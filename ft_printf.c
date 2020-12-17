@@ -46,7 +46,7 @@ char	ft_is_format_code(char c)
 char	*ft_proc_format(char *s, t_list **lst, va_list *args, t_list **has_null)
 {
 	char	*tmp;
-	t_plist	*params;
+	t_params	*params;
 	char	*null_yn;
 
 	if (*s != '%')
@@ -68,7 +68,7 @@ char	*ft_proc_format(char *s, t_list **lst, va_list *args, t_list **has_null)
 	return (s);
 }
 
-char	*ft_format(char *param_str, t_plist *params)
+char	*ft_format(char *param_str, t_params *params)
 {
 	char type;
 

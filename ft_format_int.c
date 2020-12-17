@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-char	*ft_format_int(char *param_str, t_plist *params)
+char	*ft_format_int(char *param_str, t_params *params)
 {
 	int width;
 	int precise;
@@ -40,7 +40,7 @@ char	*ft_format_int(char *param_str, t_plist *params)
 		return (ft_format_int_wp(param_str, params));
 }
 
-char	*ft_int_check_zero_precise(char *param_str, t_plist *params)
+char	*ft_int_check_zero_precise(char *param_str, t_params *params)
 {
 	if (params->precise == 0)
 	{
@@ -62,7 +62,7 @@ char	*ft_int_check_zero_precise(char *param_str, t_plist *params)
 	return (param_str);
 }
 
-char	*ft_format_int_w(char *param_str, t_plist *params)
+char	*ft_format_int_w(char *param_str, t_params *params)
 {
 	int len;
 	int len_padding;
@@ -81,7 +81,7 @@ char	*ft_format_int_w(char *param_str, t_plist *params)
 	}
 }
 
-char	*ft_format_int_p(char *param_str, t_plist *params)
+char	*ft_format_int_p(char *param_str, t_params *params)
 {
 	int precise;
 	int len_base;
@@ -97,7 +97,7 @@ char	*ft_format_int_p(char *param_str, t_plist *params)
 	return (ft_int_pad_zero(param_str, len_zero_pad));
 }
 
-char	*ft_format_int_wp(char *s, t_plist *p)
+char	*ft_format_int_wp(char *s, t_params *p)
 {
 	int precise;
 	int len;

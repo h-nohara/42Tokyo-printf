@@ -25,7 +25,7 @@ t_fmt_len_info	*info_new(void)
 	return (info);
 }
 
-char			*ft_format_str(char *param_str, t_plist *params)
+char			*ft_format_str(char *param_str, t_params *params)
 {
 	t_fmt_len_info	*info;
 	char			*converted_org;
@@ -48,7 +48,7 @@ char			*ft_format_str(char *param_str, t_plist *params)
 	return (res);
 }
 
-void			ft_get_len_s(t_plist *p, t_fmt_len_info *info)
+void			ft_get_len_s(t_params *p, t_fmt_len_info *info)
 {
 	int len_org;
 	int width;

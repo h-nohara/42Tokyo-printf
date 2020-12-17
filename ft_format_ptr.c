@@ -21,7 +21,7 @@ char	*ft_ptr_pad_zero(char *s, int len_zero_pad)
 	return (s);
 }
 
-char	*ft_format_ptr(char *param_str, t_plist *params)
+char	*ft_format_ptr(char *param_str, t_params *params)
 {
 	int width;
 	int len;
