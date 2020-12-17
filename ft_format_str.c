@@ -25,7 +25,7 @@ t_fmt_len_info	*info_new(void)
 	return (info);
 }
 
-char			*ft_format_str(char *param_str, t_params *params)
+char			*ft_format_str(char *param_str, t_params *params, int is_cnull)
 {
 	t_fmt_len_info	*info;
 	char			*converted_org;
@@ -33,7 +33,7 @@ char			*ft_format_str(char *param_str, t_params *params)
 	int				len_pad;
 
 	info = info_new();
-	info->len_org = ft_strlen(param_str);
+	info->len_org = is_cnull? 1 : ft_strlen(param_str);
 	ft_get_len_s(params, info);
 	converted_org = convert_org_str(param_str, info);
 	len_pad = info->len_padding;

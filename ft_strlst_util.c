@@ -39,7 +39,6 @@ int		ft_print_iter(t_str_lst *lst)
 	int		n;
 	char	*s;
 	int		len;
-	char	c;
 
 	n = 0;
 	while (lst)
@@ -50,8 +49,8 @@ int		ft_print_iter(t_str_lst *lst)
 		n += len;
 		if (lst->has_null == 1)
 		{
-			c = '\0';
-			write(1, &c, 1);
+			ft_putchar_fd('\0', 1);
+			n += 1;
 			s += len + 1;
 			ft_putstr_fd(s, 1);
 			n += ft_strlen(s);
