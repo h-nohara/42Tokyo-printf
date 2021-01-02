@@ -61,6 +61,8 @@ char	*ft_proc_format(char *s, t_str_lst **lst, va_list *args)
 	has_null = 0;
 	tmp = ft_get_arg(params->type, args, &has_null);
 	tmp = ft_format(tmp, params, has_null);
+	if (tmp == NULL)
+		return (NULL);
 	if (ft_strlst_append(lst, tmp, has_null) == -1)
 		return (NULL);
 	return (s);

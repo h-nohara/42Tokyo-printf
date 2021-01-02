@@ -17,6 +17,8 @@ t_fmt_len_info	*info_new(void)
 	t_fmt_len_info *info;
 
 	info = (t_fmt_len_info*)malloc(sizeof(t_fmt_len_info));
+	if (!info)
+		return (NULL);
 	info->len_all = 0;
 	info->len_org = 0;
 	info->len_org_conv = 0;
@@ -33,9 +35,13 @@ char			*ft_format_str(char *param_str, t_params *params, int is_cnull)
 	int				len_pad;
 
 	info = info_new();
+	if (!info)
+		return (NULL);
 	info->len_org = is_cnull? 1 : ft_strlen(param_str);
 	ft_get_len_s(params, info);
 	converted_org = convert_org_str(param_str, info);
+	if (!converted_org)
+		return (NULL);
 	len_pad = info->len_padding;
 	if (len_pad <= 0)
 		return (converted_org);

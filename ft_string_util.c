@@ -31,7 +31,7 @@ char	*ft_concat_padding(char *param_str, size_t len, char c, int pad_right)
 
 	additional_str = (char*)malloc(sizeof(char) * (len + 1));
 	if (!additional_str)
-		return (ft_strdup(param_str));
+		return (NULL);
 	additional_str = ft_memset(additional_str, c, len);
 	additional_str[len] = '\0';
 	if (pad_right == 0)
@@ -41,7 +41,7 @@ char	*ft_concat_padding(char *param_str, size_t len, char c, int pad_right)
 	if (res)
 		return (res);
 	else
-		return (ft_strdup(param_str));
+		return (NULL);
 }
 
 int		ft_hex_is_zero(char *s)

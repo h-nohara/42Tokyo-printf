@@ -114,6 +114,8 @@ char	*ft_format_int_wp(char *s, t_params *p)
 			s = ft_strjoin("-", ft_concat_padding(++s, precise - l, '0', 0));
 		else
 			s = ft_concat_padding(s, precise - len, '0', 0);
+		if (!s)
+			return (NULL);
 		len = ft_strlen(s);
 	}
 	if (p->width <= len)

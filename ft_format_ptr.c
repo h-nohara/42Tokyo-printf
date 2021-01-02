@@ -17,6 +17,8 @@ char	*ft_ptr_pad_zero(char *s, int len_zero_pad)
 	if (ft_strlen(s) <= 0 || len_zero_pad <= 0)
 		return (s);
 	s = ft_concat_padding(s, len_zero_pad, '0', 0);
+	if (!s)
+		return (NULL);
 	s = ft_strjoin("0x", s);
 	return (s);
 }
@@ -29,6 +31,8 @@ char	*ft_format_ptr(char *param_str, t_params *params)
 
 	width = params->width;
 	param_str = ft_get_base_ptr_str(param_str, params->precise);
+	if (!param_str)
+		return (NULL);
 	len = ft_strlen(param_str);
 	if (len >= width)
 		return (param_str);

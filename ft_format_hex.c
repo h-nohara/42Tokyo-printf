@@ -117,6 +117,8 @@ char	*ft_format_hex_wp(char *s, t_params *params)
 	if (len < precise)
 	{
 		s = ft_concat_padding(s, precise - len, '0', 0);
+		if (!s)
+			return (NULL);
 		len = ft_strlen(s);
 	}
 	if (params->width <= len)
