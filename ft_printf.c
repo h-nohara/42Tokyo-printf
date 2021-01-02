@@ -48,6 +48,8 @@ char	*ft_proc_format(char *s, t_str_lst **lst, va_list *args)
 	if (*s != '%')
 		return (NULL);
 	params = ft_init_params();
+	if (!params)
+		return (NULL);
 	++s;
 	s = ft_detect_flag(s, params);
 	s = ft_detect_width(s, params, args);

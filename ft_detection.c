@@ -23,6 +23,8 @@ char	*ft_detect_percent(char *s, t_str_lst **lst)
 	if (start != s)
 	{
 		tmp = ft_substr(start, 0, s - start);
+		if (!tmp)
+			return (NULL);
 		if (ft_strlst_append(lst, tmp, 0) == -1)
 			return (NULL);
 	}
