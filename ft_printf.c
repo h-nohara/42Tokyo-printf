@@ -21,12 +21,14 @@ int		ft_printf(char *fmt, ...)
 	lst = ft_strlst_new("", 0);
 	if (!lst)
 		return (-1);
-	while (1)
+	while (*fmt)
 	{
 		if ((fmt = ft_detect_percent(fmt, &lst)) == NULL)
+			return (-1);
+		if (!(*fmt))
 			break ;
 		if ((fmt = ft_proc_format(fmt, &lst, &args)) == NULL)
-			break ;
+			return (-1);
 	}
 	return (ft_print_iter(lst));
 }
