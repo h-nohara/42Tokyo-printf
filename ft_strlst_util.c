@@ -39,6 +39,7 @@ int		ft_print_iter(t_str_lst *lst)
 	int		n;
 	char	*s;
 	int		len;
+	t_str_lst	*tmp;
 
 	n = 0;
 	while (lst)
@@ -55,7 +56,9 @@ int		ft_print_iter(t_str_lst *lst)
 			ft_putstr_fd(s, 1);
 			n += ft_strlen(s);
 		}
+		tmp = lst;
 		lst = lst->next;
+		free(tmp);
 	}
 	return (n);
 }

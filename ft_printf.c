@@ -30,6 +30,7 @@ int		ft_printf(char *fmt, ...)
 		if ((fmt = ft_proc_format(fmt, &lst, &args)) == NULL)
 			return (-1);
 	}
+	va_end(args);
 	return (ft_print_iter(lst));
 }
 
