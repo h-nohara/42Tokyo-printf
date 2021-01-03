@@ -27,7 +27,7 @@ t_fmt_len_info	*info_new(void)
 	return (info);
 }
 
-char			*ft_format_str(char *param_str, t_params *params, int is_cnull)
+char			*ft_format_str(char *param_str, t_params *params)
 {
 	t_fmt_len_info	*info;
 	char			*converted_org;
@@ -37,7 +37,7 @@ char			*ft_format_str(char *param_str, t_params *params, int is_cnull)
 	info = info_new();
 	if (!info)
 		return (NULL);
-	info->len_org = is_cnull? 1 : ft_strlen(param_str);
+	info->len_org = ft_strlen(param_str);
 	ft_get_len_s(params, info);
 	converted_org = convert_org_str(param_str, info);
 	if (!converted_org)

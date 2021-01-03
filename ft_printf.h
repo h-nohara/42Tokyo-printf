@@ -97,9 +97,15 @@ char			*ft_detect_precise(char *s, t_params *p, va_list *args);
 ** format str
 */
 t_fmt_len_info	*info_new();
-char			*ft_format_str(char *param_str, t_params *params, int is_cnull);
+char			*ft_format_str(char *param_str, t_params *params);
 void			ft_get_len_s(t_params *params, t_fmt_len_info *info);
 char			*convert_org_str(char *s, t_fmt_len_info *info);
+
+/*
+** format cnull
+*/
+char			*ft_format_cnull(char *param_str, t_params *params);
+char			*ft_concat_padding_cnull(int width, int is_left, int is_zero);
 
 /*
 ** format int

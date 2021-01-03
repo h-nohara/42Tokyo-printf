@@ -74,9 +74,11 @@ char	*ft_format(char *param_str, t_params *params, int is_cnull)
 {
 	char type;
 
+	if (is_cnull == 1)
+		return (ft_format_cnull(param_str, params));
 	type = params->type;
 	if (type == 's' || type == '%' || type == 'c')
-		return (ft_format_str(param_str, params, is_cnull));
+		return (ft_format_str(param_str, params));
 	else if (type == 'd' || type == 'i' || type == 'u')
 		return (ft_format_int(param_str, params));
 	else if (type == 'x' || type == 'X')
