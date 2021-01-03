@@ -6,7 +6,7 @@
 /*   By: hnohara <hnohara@student.42tokyo.j>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 16:33:32 by hnohara           #+#    #+#             */
-/*   Updated: 2020/12/15 21:08:47 by hnohara          ###   ########.fr       */
+/*   Updated: 2021/01/03 18:48:26 by hnohara          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@
 typedef	struct	s_str_lst
 {
 	char				*s;
-	int				has_null;
-	struct	s_str_lst	*next;
-}					t_str_lst;
+	int					has_null;
+	struct s_str_lst	*next;
+}				t_str_lst;
 
 typedef	struct	s_params
 {
@@ -63,7 +63,7 @@ char			*ft_va_arg_p(va_list *args);
 /*
 ** plist_util
 */
-t_params			*ft_init_params();
+t_params		*ft_init_params();
 
 /*
 ** tlist_util
@@ -141,9 +141,9 @@ char			*ft_convert_to_hex(long n, int is_upper);
 /*
 ** strlst_basic
 */
-t_str_lst	*ft_strlst_new(char *s, int has_null);
-t_str_lst	*ft_strlst_last(t_str_lst *lst);
-void	ft_strlst_add_back(t_str_lst **lst, t_str_lst *new);
-void	ft_strlst_clear(t_str_lst **lst, void (*del)(void*));
+t_str_lst		*ft_strlst_new(char *s, int has_null);
+t_str_lst		*ft_strlst_last(t_str_lst *lst);
+void			ft_strlst_add_back(t_str_lst **lst, t_str_lst *new);
+void			ft_strlst_clear(t_str_lst **lst, void (*del)(void*));
 
 #endif

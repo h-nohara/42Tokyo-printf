@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_strlst_basic.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hnohara <hnohara@student.42tokyo.j>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/01/03 18:43:13 by hnohara           #+#    #+#             */
+/*   Updated: 2021/01/03 18:43:54 by hnohara          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 
 t_str_lst	*ft_strlst_new(char *s, int has_null)
@@ -22,7 +34,7 @@ t_str_lst	*ft_strlst_last(t_str_lst *lst)
 	return (lst);
 }
 
-void	ft_strlst_add_back(t_str_lst **lst, t_str_lst *new)
+void		ft_strlst_add_back(t_str_lst **lst, t_str_lst *new)
 {
 	t_str_lst *last;
 
@@ -32,7 +44,7 @@ void	ft_strlst_add_back(t_str_lst **lst, t_str_lst *new)
 	last->next = new;
 }
 
-void	ft_strlst_clear(t_str_lst **lst, void (*del)(void*))
+void		ft_strlst_clear(t_str_lst **lst, void (*del)(void*))
 {
 	t_str_lst *tmp;
 
@@ -42,9 +54,6 @@ void	ft_strlst_clear(t_str_lst **lst, void (*del)(void*))
 	{
 		tmp = (*lst);
 		(*del)((*lst)->s);
-		/*
-		** (*del)((*lst)->has_null);
-		*/
 		*lst = (*lst)->next;
 		free(tmp);
 	}

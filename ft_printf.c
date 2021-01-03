@@ -6,7 +6,7 @@
 /*   By: hnohara <hnohara@student.42tokyo.j>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 16:31:29 by hnohara           #+#    #+#             */
-/*   Updated: 2020/12/14 18:39:17 by hnohara          ###   ########.fr       */
+/*   Updated: 2021/01/03 18:45:53 by hnohara          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int		ft_printf(char *fmt, ...)
 {
 	va_list		args;
-	t_str_lst		*lst;
+	t_str_lst	*lst;
 
 	va_start(args, fmt);
 	lst = ft_strlst_new("", 0);
@@ -43,9 +43,9 @@ char	ft_is_format_code(char c)
 
 char	*ft_proc_format(char *s, t_str_lst **lst, va_list *args)
 {
-	char	*tmp;
+	char		*tmp;
 	t_params	*params;
-	int	has_null;
+	int			has_null;
 
 	if (*s != '%')
 		return (NULL);
