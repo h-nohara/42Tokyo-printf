@@ -19,13 +19,6 @@
 # include <stdint.h>
 # include <limits.h>
 
-typedef	struct	s_str_lst
-{
-	char				*s;
-	int					has_null;
-	struct s_str_lst	*next;
-}				t_str_lst;
-
 typedef	struct	s_params
 {
 	int		flag_zero;
@@ -52,7 +45,7 @@ int				ft_printf(char *fmt, ...);
 char			ft_is_format_code(char c);
 char			*ft_format(char *param_str, t_params *params, int is_cnull);
 char			*ft_get_arg(char type, va_list *args, int *has_null);
-char			*ft_proc_format(char *s, t_str_lst **lst, va_list *va);
+char			*ft_proc_format(char *s, va_list *va, int *count);
 
 /*
 ** ft_va_arg_wrapper
@@ -64,14 +57,6 @@ char			*ft_va_arg_p(va_list *args);
 ** plist_util
 */
 t_params		*ft_init_params();
-
-/*
-** tlist_util
-*/
-void			ft_free_one(void *content);
-void			ft_free_strlst(t_str_lst *lst);
-int				ft_strlst_append(t_str_lst **lst, char *s, int has_null);
-int				ft_print_iter(t_str_lst *lst);
 
 /*
 ** string_util
@@ -88,7 +73,7 @@ char			*ft_long_itoa(long n);
 /*
 ** detection
 */
-char			*ft_detect_percent(char *s, t_str_lst **lst);
+char			*ft_detect_percent(char *s, int *count);
 char			*ft_detect_flag(char *s, t_params *params);
 char			*ft_detect_width(char *s, t_params *params, va_list *args);
 char			*ft_detect_precise(char *s, t_params *p, va_list *args);
@@ -137,13 +122,5 @@ char			*ft_get_base_ptr_str(char *param_str, int precise);
 ** hex
 */
 char			*ft_convert_to_hex(long n, int is_upper);
-
-/*
-** strlst_basic
-*/
-t_str_lst		*ft_strlst_new(char *s, int has_null);
-t_str_lst		*ft_strlst_last(t_str_lst *lst);
-void			ft_strlst_add_back(t_str_lst **lst, t_str_lst *new);
-void			ft_strlst_clear(t_str_lst **lst, void (*del)(void*));
 
 #endif

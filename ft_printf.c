@@ -15,23 +15,21 @@
 int		ft_printf(char *fmt, ...)
 {
 	va_list		args;
-	t_str_lst	*lst;
+	int count;
 
 	va_start(args, fmt);
-	lst = ft_strlst_new("", 0);
-	if (!lst)
-		return (-1);
+	count = 0;
 	while (*fmt)
 	{
-		if ((fmt = ft_detect_percent(fmt, &lst)) == NULL)
+		if ((fmt = ft_detect_percent(fmt, &count)) == NULL)
 			return (-1);
 		if (!(*fmt))
 			break ;
-		if ((fmt = ft_proc_format(fmt, &lst, &args)) == NULL)
+		if ((fmt = ft_proc_format(fmt, &args, &count)) == NULL)
 			return (-1);
 	}
 	va_end(args);
-	return (ft_print_iter(lst));
+	return (count);
 }
 
 char	ft_is_format_code(char c)
@@ -42,7 +40,7 @@ char	ft_is_format_code(char c)
 	return (0);
 }
 
-char	*ft_proc_format(char *s, t_str_lst **lst, va_list *args)
+char	*ft_proc_format(char *s, va_list *args, int *count)
 {
 	char		*tmp;
 	t_params	*params;
@@ -66,8 +64,15 @@ char	*ft_proc_format(char *s, t_str_lst **lst, va_list *args)
 	tmp = ft_format(tmp, params, has_null);
 	if (tmp == NULL)
 		return (NULL);
-	if (ft_strlst_append(lst, tmp, has_null) == -1)
-		return (NULL);
+	ft_putstr_fd(tmp, 1);
+	*count += ft_strlen(tmp);
+	if (has_null)
+	{
+		ft_putchar_fd('\0', 1);
+		tmp += ft_strlen(tmp) + 1;
+		ft_putstr_fd(tmp, 1);
+		*count += 1 + ft_strlen(tmp);
+	}
 	return (s);
 }
 
