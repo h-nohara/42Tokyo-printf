@@ -88,14 +88,19 @@ int		ft_format(char *param_str, t_params *params, int is_cnull)
 		res = ft_format_cnull(params);
 	else if (type == 's' || type == '%' || type == 'c')
 		res = ft_format_str(param_str, params);
-	else if (type == 'd' || type == 'i' || type == 'u')
-		res = ft_format_int(param_str, params);
-	else if (type == 'x' || type == 'X')
-		res = ft_format_hex(param_str, params);
-	else if (type == 'p')
-		res = ft_format_ptr(param_str, params);
 	else
-		res = ft_strdup("");
+	{
+		if (params->precise == -2 && params->flag_zero)
+			params->flag_zero = 0;
+		if (type == 'd' || type == 'i' || type == 'u')
+			res = ft_format_int(param_str, params);
+		else if (type == 'x' || type == 'X')
+			res = ft_format_hex(param_str, params);
+		else if (type == 'p')
+			res = ft_format_ptr(param_str, params);
+		else
+			res = ft_strdup("");
+	}
 	if (!res)
 		return (-1);
 	ft_print_nonnull_result(res, is_cnull, &count);
