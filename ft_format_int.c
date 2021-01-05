@@ -14,35 +14,35 @@
 
 char	*ft_format_int(char *param_str, t_params *params)
 {
-	char *s;
+	char *zero_checked_str;
 	int width;
 	int precise;
 	char *res;
 
-	s = ft_int_check_zero_precise(param_str, params);
-	if (!s)
+	zero_checked_str = ft_int_check_zero_precise(param_str, params);
+	if (!zero_checked_str)
 		return (NULL);
 	width = params->width;
 	precise = params->precise;
 	if (precise == -1)
 	{
 		if (width == -1)
-			res = ft_strdup(s);
+			res = ft_strdup(zero_checked_str);
 		else
-			res = ft_format_int_w(param_str, params);
+			res = ft_format_int_w(zero_checked_str, params);
 	}
 	else if (precise == -2)
 	{
 		if (width == -1)
-			res = ft_strdup(param_str);
+			res = ft_strdup(zero_checked_str);
 		else
-			res = ft_format_int_w(param_str, params);
+			res = ft_format_int_w(zero_checked_str, params);
 	}
 	else if (width == -1)
-		res = ft_format_int_p(param_str, params);
+		res = ft_format_int_p(zero_checked_str, params);
 	else
-		res = ft_format_int_wp(param_str, params);
-	free(s);
+		res = ft_format_int_wp(zero_checked_str, params);
+	free(zero_checked_str);
 	return (res);
 }
 
