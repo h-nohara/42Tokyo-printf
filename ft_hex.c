@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-static	int		get_hex_len(long n)
+static	int		get_hex_len(uintptr_t n)
 {
 	int i;
 
@@ -27,7 +27,7 @@ static	int		get_hex_len(long n)
 	return (i);
 }
 
-char			*ft_convert_to_hex(long n, int is_upper)
+char			*ft_convert_to_hex(uintptr_t n, int is_upper)
 {
 	char	*hex_ord;
 	char	*res;

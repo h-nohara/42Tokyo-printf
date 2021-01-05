@@ -60,5 +60,5 @@ char	*ft_va_arg_p(va_list *args)
 	if (p == NULL)
 		return (ft_strdup("0"));
 	else
-		return (ft_convert_to_hex((int64_t)p, 0));
+		return (ft_convert_to_hex((uintptr_t)p, 0));
 }

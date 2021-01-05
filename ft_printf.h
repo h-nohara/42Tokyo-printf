@@ -130,6 +130,6 @@ char			*ft_get_base_ptr_str(char *param_str, int precise);
 /*
 ** hex
 */
-char			*ft_convert_to_hex(long n, int is_upper);
+char			*ft_convert_to_hex(uintptr_t n, int is_upper);
 
 #endif
