@@ -102,9 +102,8 @@ int	ft_format(char *param_str, t_params *params, int is_cnull)
 	if (is_cnull == 1)
 	{
 		ft_putchar_fd(0, 1);
-		res += ft_strlen(res) + 1;
-		/* ft_putstr_fd(res, 1); */
-		/* count += 1 + ft_strlen(res); */
+		ft_putstr_fd(res + ft_strlen(res) + 1, 1);
+		count += 1 + ft_strlen(res + ft_strlen(res) + 1);
 	}
 	free(res);
 	return (count);
