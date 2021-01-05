@@ -6,7 +6,7 @@
 /*   By: hnohara <hnohara@student.42tokyo.j>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 16:31:29 by hnohara           #+#    #+#             */
-/*   Updated: 2021/01/05 16:04:11 by hnohara          ###   ########.fr       */
+/*   Updated: 2021/01/05 18:03:19 by hnohara          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,9 @@ char	*ft_proc_format(char *s, va_list *args, int *count)
 
 int		ft_getarg_format_print(t_params *params, va_list *args)
 {
-	char *param_str;
-	int has_null;
-	int count;
+	char	*param_str;
+	int		has_null;
+	int		count;
 
 	has_null = 0;
 	param_str = ft_get_arg(params->type, args, &has_null);
