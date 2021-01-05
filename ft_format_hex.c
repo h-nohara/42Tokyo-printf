@@ -6,7 +6,7 @@
 /*   By: hnohara <hnohara@student.42tokyo.j>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 15:54:11 by hnohara           #+#    #+#             */
-/*   Updated: 2021/01/05 17:12:34 by hnohara          ###   ########.fr       */
+/*   Updated: 2021/01/06 02:18:54 by hnohara          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,11 +97,11 @@ char	*ft_format_hex_p(char *param_str, t_params *params)
 
 char	*ft_format_hex_wp(char *s, t_params *params)
 {
-	int precise;
-	int len;
-	int flag;
-	char *tmp;
-	char *res;
+	int		precise;
+	int		len;
+	int		flag;
+	char	*tmp;
+	char	*res;
 
 	precise = params->precise;
 	len = ft_strlen(s);
