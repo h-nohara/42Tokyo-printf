@@ -44,6 +44,7 @@ char	*ft_detect_flag(char *s, t_params *params)
 char	*ft_detect_width(char *s, t_params *params, va_list *args)
 {
 	char *start;
+	char *tmp;
 
 	if (*s == '*')
 	{
@@ -59,7 +60,13 @@ char	*ft_detect_width(char *s, t_params *params, va_list *args)
 	while (ft_isdigit(*s))
 		++s;
 	if (s != start)
-		params->width = ft_atoi(ft_substr(start, 0, s - start));
+	{
+		tmp = ft_substr(start, 0, s - start);
+		if (!tmp)
+			return (s);
+		params->width = ft_atoi(tmp);
+		free(tmp);
+	}
 	return (s);
 }
 
@@ -67,6 +74,7 @@ char	*ft_detect_precise(char *s, t_params *params, va_list *args)
 {
 	char	*start;
 	int		found;
+	char	*tmp;
 
 	found = 0;
 	if (*s == '.')
@@ -86,7 +94,13 @@ char	*ft_detect_precise(char *s, t_params *params, va_list *args)
 		if (s == start && found == 0)
 			params->precise = -2;
 		else if (s != start)
-			params->precise = ft_atoi(ft_substr(start, 0, s - start));
+		{
+			tmp = ft_substr(start, 0, s - start);
+			if (!tmp)
+				return (s);
+			params->precise = ft_atoi(tmp);
+			free(tmp);
+		}
 	}
 	return (s);
 }

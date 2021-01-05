@@ -100,21 +100,25 @@ char	*ft_format_hex_wp(char *s, t_params *params)
 	int precise;
 	int len;
 	int flag;
+	char *tmp;
+	char *res;
 
 	precise = params->precise;
 	len = ft_strlen(s);
 	if (len < precise)
-	{
-		s = ft_concat_padding(s, precise - len, '0', 0);
-		if (!s)
-			return (NULL);
-		len = ft_strlen(s);
-	}
+		tmp = ft_concat_padding(s, precise - len, '0', 0);
+	else
+		tmp = ft_strdup(s);
+	if (!tmp)
+		return (NULL);
+	len = ft_strlen(tmp);
 	if (params->width <= len)
-		return (ft_strdup(s));
+		return (tmp);
 	else
 	{
 		flag = params->flag_minus == 1;
-		return (ft_concat_padding(s, params->width - len, ' ', flag));
+		res = ft_concat_padding(tmp, params->width - len, ' ', flag);
+		free(tmp);
+		return (res);
 	}
 }
