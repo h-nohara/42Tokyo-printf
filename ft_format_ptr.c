@@ -6,7 +6,7 @@
 /*   By: hnohara <hnohara@student.42tokyo.j>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 16:32:29 by hnohara           #+#    #+#             */
-/*   Updated: 2020/12/14 18:33:23 by hnohara          ###   ########.fr       */
+/*   Updated: 2021/01/05 15:59:45 by hnohara          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,11 @@ char	*ft_ptr_pad_zero(char *s, int len_zero_pad)
 
 char	*ft_format_ptr(char *param_str, t_params *params)
 {
-	int width;
-	int len;
-	int flag;
-	char *base_str;
-	char *res;
+	int		width;
+	int		len;
+	int		flag;
+	char	*base_str;
+	char	*res;
 
 	width = params->width;
 	base_str = ft_get_base_ptr_str(param_str, params->precise);

@@ -6,7 +6,7 @@
 /*   By: hnohara <hnohara@student.42tokyo.j>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 16:30:35 by hnohara           #+#    #+#             */
-/*   Updated: 2020/12/14 16:30:44 by hnohara          ###   ########.fr       */
+/*   Updated: 2021/01/05 15:59:10 by hnohara          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 char	*ft_format_int(char *param_str, t_params *params)
 {
-	char *zero_checked_str;
-	int width;
-	int precise;
-	char *res;
+	char	*zero_checked_str;
+	int		width;
+	int		precise;
+	char	*res;
 
 	zero_checked_str = ft_int_check_zero_precise(param_str, params);
 	if (!zero_checked_str)
@@ -81,7 +81,7 @@ char	*ft_format_int_w(char *param_str, t_params *params)
 	{
 		len_padding = params->width - len;
 		if ((params->flag_zero == 1) && (params->flag_minus == 0))
-			return(ft_int_pad_zero(param_str, len_padding));
+			return (ft_int_pad_zero(param_str, len_padding));
 		else
 		{
 			flag = params->flag_minus;
@@ -108,13 +108,13 @@ char	*ft_format_int_p(char *param_str, t_params *params)
 
 char	*ft_format_int_wp(char *s, t_params *p)
 {
-	int precise;
-	int len;
-	int l;
-	int is_neg;
-	char *tmp;
-	char *res;
-	char *res2;
+	int		precise;
+	int		len;
+	int		l;
+	int		is_neg;
+	char	*tmp;
+	char	*res;
+	char	*res2;
 
 	precise = p->precise;
 	is_neg = *s == '-';

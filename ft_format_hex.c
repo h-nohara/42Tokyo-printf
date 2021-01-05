@@ -6,7 +6,7 @@
 /*   By: hnohara <hnohara@student.42tokyo.j>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 15:54:11 by hnohara           #+#    #+#             */
-/*   Updated: 2020/12/14 18:34:31 by hnohara          ###   ########.fr       */
+/*   Updated: 2021/01/05 15:54:51 by hnohara          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 char	*ft_format_hex(char *param_str, t_params *params)
 {
-	int width;
-	int precise;
-	char *s;
-	char *res;
+	int		width;
+	int		precise;
+	char	*s;
+	char	*res;
 
 	s = ft_hex_check_zero_precise(param_str, params);
 	if (!s)

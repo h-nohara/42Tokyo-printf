@@ -6,7 +6,7 @@
 /*   By: hnohara <hnohara@student.42tokyo.j>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 16:31:29 by hnohara           #+#    #+#             */
-/*   Updated: 2021/01/03 18:45:53 by hnohara          ###   ########.fr       */
+/*   Updated: 2021/01/05 16:04:11 by hnohara          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int		ft_printf(char *fmt, ...)
 {
 	va_list		args;
-	int count;
+	int			count;
 
 	va_start(args, fmt);
 	count = 0;
@@ -75,11 +75,11 @@ char	*ft_proc_format(char *s, va_list *args, int *count)
 	}
 }
 
-int	ft_format(char *param_str, t_params *params, int is_cnull)
+int		ft_format(char *param_str, t_params *params, int is_cnull)
 {
-	char type;
-	char *res;
-	int count;
+	char	type;
+	char	*res;
+	int		count;
 
 	count = 0;
 	type = params->type;
