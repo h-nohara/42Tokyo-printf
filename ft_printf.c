@@ -45,6 +45,7 @@ char	*ft_proc_format(char *s, va_list *args, int *count)
 	char		*tmp;
 	t_params	*params;
 	int			has_null;
+	int			count_add;
 
 	if (*s != '%')
 		return (NULL);
@@ -61,37 +62,50 @@ char	*ft_proc_format(char *s, va_list *args, int *count)
 		return (s);
 	has_null = 0;
 	tmp = ft_get_arg(params->type, args, &has_null);
-	tmp = ft_format(tmp, params, has_null);
-	if (tmp == NULL)
+	if (!tmp)
 		return (NULL);
-	ft_putstr_fd(tmp, 1);
-	*count += ft_strlen(tmp);
-	if (has_null)
+	count_add = ft_format(tmp, params, has_null);
+	free(tmp);
+	if (count_add == -1)
+		return (NULL);
+	else
 	{
-		ft_putchar_fd('\0', 1);
-		tmp += ft_strlen(tmp) + 1;
-		ft_putstr_fd(tmp, 1);
-		*count += 1 + ft_strlen(tmp);
+		*count += count_add;
+		return (s);
 	}
-	return (s);
 }
 
-char	*ft_format(char *param_str, t_params *params, int is_cnull)
+int	ft_format(char *param_str, t_params *params, int is_cnull)
 {
 	char type;
+	char *res;
+	int count;
 
+	count = 0;
 	if (is_cnull == 1)
-		return (ft_format_cnull(param_str, params));
+		res = ft_format_cnull(params);
 	type = params->type;
 	if (type == 's' || type == '%' || type == 'c')
-		return (ft_format_str(param_str, params));
+		res = ft_format_str(param_str, params);
 	else if (type == 'd' || type == 'i' || type == 'u')
-		return (ft_format_int(param_str, params));
+		res = ft_format_int(param_str, params);
 	else if (type == 'x' || type == 'X')
-		return (ft_format_hex(param_str, params));
+		res = ft_format_hex(param_str, params);
 	else if (type == 'p')
-		return (ft_format_ptr(param_str, params));
-	return (param_str);
+		res = ft_format_ptr(param_str, params);
+	if (!res)
+		return (-1);
+	ft_putstr_fd(res, 1);
+	count += ft_strlen(res);
+	if (is_cnull == 1)
+	{
+		ft_putchar_fd('\0', 1);
+		res += ft_strlen(res) + 1;
+		ft_putstr_fd(res, 1);
+		count += 1 + ft_strlen(res);
+	}
+	free(res);
+	return (count);
 }
 
 char	*ft_get_arg(char type, va_list *args, int *has_null)

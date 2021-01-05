@@ -43,7 +43,7 @@ typedef	struct	s_fmt_len_info
 
 int				ft_printf(char *fmt, ...);
 char			ft_is_format_code(char c);
-char			*ft_format(char *param_str, t_params *params, int is_cnull);
+int			ft_format(char *param_str, t_params *params, int is_cnull);
 char			*ft_get_arg(char type, va_list *args, int *has_null);
 char			*ft_proc_format(char *s, va_list *va, int *count);
 
@@ -89,7 +89,7 @@ char			*convert_org_str(char *s, t_fmt_len_info *info);
 /*
 ** format cnull
 */
-char			*ft_format_cnull(char *param_str, t_params *params);
+char			*ft_format_cnull(t_params *params);
 char			*ft_concat_padding_cnull(int width, int is_left, int is_zero);
 
 /*

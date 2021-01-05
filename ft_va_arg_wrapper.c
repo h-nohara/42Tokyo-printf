@@ -18,9 +18,9 @@ char	*ft_va_arg_s(va_list *args)
 
 	s = va_arg(*args, char*);
 	if (!s)
-		return ("(null)");
+		return (ft_strdup("(null)"));
 	else
-		return (s);
+		return (ft_strdup(s));
 }
 
 char	*ft_va_arg_p(va_list *args)
@@ -29,7 +29,7 @@ char	*ft_va_arg_p(va_list *args)
 
 	p = va_arg(*args, void*);
 	if (p == NULL)
-		return ("0");
+		return (ft_strdup("0"));
 	else
 		return (ft_convert_to_hex((int64_t)p, 0));
 }

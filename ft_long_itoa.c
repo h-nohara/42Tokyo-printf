@@ -71,7 +71,7 @@ char				*ft_long_itoa(long n)
 	int		size;
 
 	if (n == 0)
-		return ("0");
+		return (ft_strdup("0"));
 	if (n > 0)
 		rank = ft_get_rank(n);
 	else
