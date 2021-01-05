@@ -31,17 +31,20 @@ char	*ft_format_hex(char *param_str, t_params *params)
 		else
 			res = ft_format_hex_w(s, params);
 	}
-	if (precise == -2)
+	else if (precise == -2)
 	{
 		if (width == -1)
 			res = ft_strdup(s);
 		else
 			res = ft_format_hex_w(s, params);
 	}
-	if (width == -1)
-		res = ft_format_hex_p(s, params);
 	else
-		res = ft_format_hex_wp(s, params);
+	{
+		if (width == -1)
+			res = ft_format_hex_p(s, params);
+		else
+			res = ft_format_hex_wp(s, params);
+	}
 	free(s);
 	return (res);
 }
