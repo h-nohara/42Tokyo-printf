@@ -6,7 +6,7 @@
 /*   By: hnohara <hnohara@student.42tokyo.j>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 16:26:39 by hnohara           #+#    #+#             */
-/*   Updated: 2020/12/15 21:16:17 by hnohara          ###   ########.fr       */
+/*   Updated: 2021/01/05 17:32:33 by hnohara          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,23 +34,35 @@ char			*ft_format_str(char *param_str, t_params *params)
 	char			*res;
 	int				len_pad;
 
-	info = info_new();
-	if (!info)
+	if (!(info = info_new()))
 		return (NULL);
 	info->len_org = ft_strlen(param_str);
 	ft_get_len_s(params, info);
 	converted_org = convert_org_str(param_str, info);
 	if (!converted_org)
+	{
+		free(info);
 		return (NULL);
+	}
 	len_pad = info->len_padding;
+	res = ft_format_str_joinpad(converted_org, params, len_pad);
+	free(info);
+	free(converted_org);
+	return (res);
+}
+
+char			*ft_format_str_joinpad(char *s, t_params *p, int len_pad)
+{
+	char *res;
+
 	if (len_pad <= 0)
-		return (converted_org);
-	if (params->flag_minus == 1)
-		res = ft_concat_padding(converted_org, (size_t)(len_pad), ' ', 1);
-	else if (params->flag_zero == 1)
-		res = ft_concat_padding(converted_org, (size_t)(len_pad), '0', 0);
+		res = ft_strdup(s);
+	else if (p->flag_minus == 1)
+		res = ft_concat_padding(s, (size_t)(len_pad), ' ', 1);
+	else if (p->flag_zero == 1)
+		res = ft_concat_padding(s, (size_t)(len_pad), '0', 0);
 	else
-		res = ft_concat_padding(converted_org, (size_t)(len_pad), ' ', 0);
+		res = ft_concat_padding(s, (size_t)(len_pad), ' ', 0);
 	return (res);
 }
 

@@ -12,21 +12,18 @@
 
 #include "ft_printf.h"
 
-char	*ft_detect_percent(char *s, t_str_lst **lst)
+char	*ft_detect_percent(char *s, int *count)
 {
 	char *start;
-	char *tmp;
 
 	start = s;
 	while (*s && *s != '%')
 		++s;
 	if (start != s)
 	{
-		tmp = ft_substr(start, 0, s - start);
-		if (!tmp)
+		if (write(1, start, s - start) == -1)
 			return (NULL);
-		if (ft_strlst_append(lst, tmp, 0) == -1)
-			return (NULL);
+		*count += s - start;
 	}
 	return (s);
 }

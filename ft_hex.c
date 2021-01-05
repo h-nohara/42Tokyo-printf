@@ -40,6 +40,8 @@ char			*ft_convert_to_hex(long n, int is_upper)
 		hex_ord = "0123456789ABCDEF";
 	size = get_hex_len(n) + 1;
 	res = (char*)malloc(sizeof(char) * size);
+	if (!res)
+		return (NULL);
 	i = size - 1;
 	res[i--] = '\0';
 	while (i >= 0)

@@ -6,7 +6,7 @@
 /*   By: hnohara <hnohara@student.42tokyo.j>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 15:54:11 by hnohara           #+#    #+#             */
-/*   Updated: 2020/12/14 18:34:31 by hnohara          ###   ########.fr       */
+/*   Updated: 2021/01/05 17:12:34 by hnohara          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,55 +14,44 @@
 
 char	*ft_format_hex(char *param_str, t_params *params)
 {
-	int width;
-	int precise;
+	int		width;
+	int		precise;
+	char	*s;
+	char	*res;
 
-	param_str = ft_hex_check_zero_precise(param_str, params);
+	s = ft_hex_check_zero_precise(param_str, params);
+	if (!s)
+		return (NULL);
 	width = params->width;
 	precise = params->precise;
+	res = ft_format_hex_core(s, width, precise, params);
+	free(s);
+	return (res);
+}
+
+char	*ft_format_hex_core(char *s, int width, int precise, t_params *params)
+{
 	if (precise == -1)
 	{
 		if (width == -1)
-			return (param_str);
+			return (ft_strdup(s));
 		else
-			return (ft_format_hex_w(param_str, params));
+			return (ft_format_hex_w(s, params));
 	}
-	if (precise == -2)
+	else if (precise == -2)
 	{
 		if (width == -1)
-			return (param_str);
+			return (ft_strdup(s));
 		else
-			return (ft_format_hex_w(param_str, params));
+			return (ft_format_hex_w(s, params));
 	}
-	if (width == -1)
-		return (ft_format_hex_p(param_str, params));
 	else
-		return (ft_format_hex_wp(param_str, params));
-}
-
-char	*ft_hex_check_zero_precise(char *param_str, t_params *params)
-{
-	int is_zero;
-
-	is_zero = ft_hex_is_zero(param_str);
-	if (params->precise == 0)
 	{
-		if (is_zero == 0)
-			params->precise = 1;
+		if (width == -1)
+			return (ft_format_hex_p(s, params));
 		else
-		{
-			if (params->width == -1)
-				return ("");
-			else
-			{
-				params->precise = 1;
-				return (" ");
-			}
-		}
+			return (ft_format_hex_wp(s, params));
 	}
-	else if (params->precise == -2 && is_zero == 1)
-		return ("");
-	return (param_str);
 }
 
 char	*ft_format_hex_w(char *param_str, t_params *params)
@@ -73,7 +62,7 @@ char	*ft_format_hex_w(char *param_str, t_params *params)
 
 	len = ft_strlen(param_str);
 	if (len >= params->width)
-		return (param_str);
+		return (ft_strdup(param_str));
 	else
 	{
 		len_pad = params->width - len;
@@ -82,7 +71,7 @@ char	*ft_format_hex_w(char *param_str, t_params *params)
 			if (len > 0)
 				return (ft_concat_padding(param_str, len_pad, '0', 0));
 			else
-				return (param_str);
+				return (ft_strdup(param_str));
 		}
 		flag = params->flag_minus;
 		return (ft_concat_padding(param_str, len_pad, ' ', flag));
@@ -98,12 +87,12 @@ char	*ft_format_hex_p(char *param_str, t_params *params)
 	precise = params->precise;
 	len = ft_strlen(param_str);
 	if (len >= precise)
-		return (param_str);
+		return (ft_strdup(param_str));
 	len_zero_pad = precise - len;
 	if (len > 0)
 		return (ft_concat_padding(param_str, len_zero_pad, '0', 0));
 	else
-		return (param_str);
+		return (ft_strdup(param_str));
 }
 
 char	*ft_format_hex_wp(char *s, t_params *params)
@@ -122,7 +111,7 @@ char	*ft_format_hex_wp(char *s, t_params *params)
 		len = ft_strlen(s);
 	}
 	if (params->width <= len)
-		return (s);
+		return (ft_strdup(s));
 	else
 	{
 		flag = params->flag_minus == 1;

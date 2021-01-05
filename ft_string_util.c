@@ -12,13 +12,21 @@
 
 #include "ft_printf.h"
 
+char	ft_is_format_code(char c)
+{
+	if (c == 'c' || c == 's' || c == 'p' || c == 'd' || c == 'i' || c == 'u' ||
+			c == 'x' || c == 'X' || c == '%')
+		return (c);
+	return (0);
+}
+
 char	*ft_ctos(char c)
 {
 	char *s;
 
 	s = (char*)malloc(sizeof(char) * 2);
 	if (!s)
-		return ("");
+		return (NULL);
 	s[0] = c;
 	s[1] = '\0';
 	return (s);
@@ -38,6 +46,7 @@ char	*ft_concat_padding(char *param_str, size_t len, char c, int pad_right)
 		res = ft_strjoin(additional_str, param_str);
 	else
 		res = ft_strjoin(param_str, additional_str);
+	free(additional_str);
 	if (res)
 		return (res);
 	else

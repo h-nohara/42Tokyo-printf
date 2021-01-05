@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-char	*ft_format_cnull(char *param_str, t_params *params)
+char	*ft_format_cnull(t_params *params)
 {
 	int width;
 	int flag_minus;
@@ -22,7 +22,7 @@ char	*ft_format_cnull(char *param_str, t_params *params)
 	if (width <= 0)
 		width = 1;
 	if (width == 1)
-		return (ft_strdup(param_str));
+		return (ft_ctos(0));
 	flag_minus = params->flag_minus;
 	flag_zero = params->flag_zero;
 	return (ft_concat_padding_cnull(width, flag_minus, flag_zero));

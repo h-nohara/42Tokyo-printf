@@ -6,7 +6,7 @@
 /*   By: hnohara <hnohara@student.42tokyo.j>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 16:30:35 by hnohara           #+#    #+#             */
-/*   Updated: 2020/12/14 16:30:44 by hnohara          ###   ########.fr       */
+/*   Updated: 2021/01/05 15:59:10 by hnohara          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,52 +14,44 @@
 
 char	*ft_format_int(char *param_str, t_params *params)
 {
-	int width;
-	int precise;
+	char	*zero_checked_str;
+	int		width;
+	int		precise;
+	char	*res;
 
-	param_str = ft_int_check_zero_precise(param_str, params);
+	zero_checked_str = ft_int_check_zero_precise(param_str, params);
+	if (!zero_checked_str)
+		return (NULL);
 	width = params->width;
 	precise = params->precise;
+	res = ft_format_int_core(zero_checked_str, width, precise, params);
+	free(zero_checked_str);
+	return (res);
+}
+
+char	*ft_format_int_core(char *s, int width, int precise, t_params *params)
+{
+	char *res;
+
 	if (precise == -1)
 	{
 		if (width == -1)
-			return (param_str);
+			res = ft_strdup(s);
 		else
-			return (ft_format_int_w(param_str, params));
+			res = ft_format_int_w(s, params);
 	}
-	if (precise == -2)
+	else if (precise == -2)
 	{
 		if (width == -1)
-			return (param_str);
+			res = ft_strdup(s);
 		else
-			return (ft_format_int_w(param_str, params));
+			res = ft_format_int_w(s, params);
 	}
-	if (width == -1)
-		return (ft_format_int_p(param_str, params));
+	else if (width == -1)
+		res = ft_format_int_p(s, params);
 	else
-		return (ft_format_int_wp(param_str, params));
-}
-
-char	*ft_int_check_zero_precise(char *param_str, t_params *params)
-{
-	if (params->precise == 0)
-	{
-		if (param_str[0] != '0')
-			params->precise = 1;
-		else
-		{
-			if (params->width == -1)
-				return ("");
-			else
-			{
-				params->precise = 1;
-				return (" ");
-			}
-		}
-	}
-	else if (params->precise == -2 && param_str[0] == '0')
-		return ("");
-	return (param_str);
+		res = ft_format_int_wp(s, params);
+	return (res);
 }
 
 char	*ft_format_int_w(char *param_str, t_params *params)
@@ -70,14 +62,17 @@ char	*ft_format_int_w(char *param_str, t_params *params)
 
 	len = ft_strlen(param_str);
 	if (len >= params->width)
-		return (param_str);
+		return (ft_strdup(param_str));
 	else
 	{
 		len_padding = params->width - len;
 		if ((params->flag_zero == 1) && (params->flag_minus == 0))
 			return (ft_int_pad_zero(param_str, len_padding));
-		flag = params->flag_minus;
-		return (ft_concat_padding(param_str, len_padding, ' ', flag));
+		else
+		{
+			flag = params->flag_minus;
+			return (ft_concat_padding(param_str, len_padding, ' ', flag));
+		}
 	}
 }
 
@@ -92,34 +87,7 @@ char	*ft_format_int_p(char *param_str, t_params *params)
 	is_neg = *param_str == '-';
 	len_base = is_neg ? ft_strlen(param_str) - 1 : ft_strlen(param_str);
 	if (len_base >= precise)
-		return (param_str);
+		return (ft_strdup(param_str));
 	len_zero_pad = precise - len_base;
 	return (ft_int_pad_zero(param_str, len_zero_pad));
-}
-
-char	*ft_format_int_wp(char *s, t_params *p)
-{
-	int precise;
-	int len;
-	int l;
-	int is_neg;
-
-	precise = p->precise;
-	is_neg = *s == '-';
-	len = ft_strlen(s);
-	l = is_neg ? len - 1 : len;
-	if (l < precise)
-	{
-		if (is_neg == 1)
-			s = ft_strjoin("-", ft_concat_padding(++s, precise - l, '0', 0));
-		else
-			s = ft_concat_padding(s, precise - len, '0', 0);
-		if (!s)
-			return (NULL);
-		len = ft_strlen(s);
-	}
-	if (p->width <= len)
-		return (s);
-	else
-		return (ft_concat_padding(s, p->width - len, ' ', p->flag_minus == 1));
 }

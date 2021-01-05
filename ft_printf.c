@@ -6,7 +6,7 @@
 /*   By: hnohara <hnohara@student.42tokyo.j>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 16:31:29 by hnohara           #+#    #+#             */
-/*   Updated: 2021/01/03 18:45:53 by hnohara          ###   ########.fr       */
+/*   Updated: 2021/01/05 18:03:19 by hnohara          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,38 +15,27 @@
 int		ft_printf(char *fmt, ...)
 {
 	va_list		args;
-	t_str_lst	*lst;
+	int			count;
 
 	va_start(args, fmt);
-	lst = ft_strlst_new("", 0);
-	if (!lst)
-		return (-1);
+	count = 0;
 	while (*fmt)
 	{
-		if ((fmt = ft_detect_percent(fmt, &lst)) == NULL)
+		if ((fmt = ft_detect_percent(fmt, &count)) == NULL)
 			return (-1);
 		if (!(*fmt))
 			break ;
-		if ((fmt = ft_proc_format(fmt, &lst, &args)) == NULL)
+		if ((fmt = ft_proc_format(fmt, &args, &count)) == NULL)
 			return (-1);
 	}
 	va_end(args);
-	return (ft_print_iter(lst));
+	return (count);
 }
 
-char	ft_is_format_code(char c)
+char	*ft_proc_format(char *s, va_list *args, int *count)
 {
-	if (c == 'c' || c == 's' || c == 'p' || c == 'd' || c == 'i' || c == 'u' ||
-			c == 'x' || c == 'X' || c == '%')
-		return (c);
-	return (0);
-}
-
-char	*ft_proc_format(char *s, t_str_lst **lst, va_list *args)
-{
-	char		*tmp;
 	t_params	*params;
-	int			has_null;
+	int			count_add;
 
 	if (*s != '%')
 		return (NULL);
@@ -61,59 +50,67 @@ char	*ft_proc_format(char *s, t_str_lst **lst, va_list *args)
 		params->type = *(s++);
 	else
 		return (s);
-	has_null = 0;
-	tmp = ft_get_arg(params->type, args, &has_null);
-	tmp = ft_format(tmp, params, has_null);
-	if (tmp == NULL)
+	count_add = ft_getarg_format_print(params, args);
+	free(params);
+	if (count_add == -1)
 		return (NULL);
-	if (ft_strlst_append(lst, tmp, has_null) == -1)
-		return (NULL);
-	return (s);
+	else
+	{
+		*count += count_add;
+		return (s);
+	}
 }
 
-char	*ft_format(char *param_str, t_params *params, int is_cnull)
-{
-	char type;
-
-	if (is_cnull == 1)
-		return (ft_format_cnull(param_str, params));
-	type = params->type;
-	if (type == 's' || type == '%' || type == 'c')
-		return (ft_format_str(param_str, params));
-	else if (type == 'd' || type == 'i' || type == 'u')
-		return (ft_format_int(param_str, params));
-	else if (type == 'x' || type == 'X')
-		return (ft_format_hex(param_str, params));
-	else if (type == 'p')
-		return (ft_format_ptr(param_str, params));
-	return (param_str);
-}
-
-char	*ft_get_arg(char type, va_list *args, int *has_null)
+int		ft_getarg_format_print(t_params *params, va_list *args)
 {
 	char	*param_str;
-	int		c;
+	int		has_null;
+	int		count;
 
-	if (type == 's')
-		param_str = ft_va_arg_s(args);
-	else if (type == 'c')
-	{
-		c = va_arg(*args, int);
-		if (c == 0)
-			*has_null = 1;
-		param_str = ft_ctos((char)c);
-	}
-	else if (type == 'd' || type == 'i')
-		param_str = ft_itoa(va_arg(*args, int));
-	else if (type == 'u')
-		param_str = ft_long_itoa(va_arg(*args, unsigned int));
+	has_null = 0;
+	param_str = ft_get_arg(params->type, args, &has_null);
+	if (!param_str)
+		return (-1);
+	count = ft_format(param_str, params, has_null);
+	free(param_str);
+	return (count);
+}
+
+int		ft_format(char *param_str, t_params *params, int is_cnull)
+{
+	char	type;
+	char	*res;
+	int		count;
+
+	count = 0;
+	type = params->type;
+	if (is_cnull == 1)
+		res = ft_format_cnull(params);
+	else if (type == 's' || type == '%' || type == 'c')
+		res = ft_format_str(param_str, params);
+	else if (type == 'd' || type == 'i' || type == 'u')
+		res = ft_format_int(param_str, params);
 	else if (type == 'x' || type == 'X')
-		param_str = ft_convert_to_hex(va_arg(*args, long), type == 'X');
+		res = ft_format_hex(param_str, params);
 	else if (type == 'p')
-		param_str = ft_va_arg_p(args);
-	else if (type == '%')
-		param_str = ft_strdup("%");
+		res = ft_format_ptr(param_str, params);
 	else
-		param_str = ft_strdup("");
-	return (param_str);
+		res = ft_strdup("");
+	if (!res)
+		return (-1);
+	ft_print_nonnull_result(res, is_cnull, &count);
+	free(res);
+	return (count);
+}
+
+void	ft_print_nonnull_result(char *res, int is_cnull, int *count)
+{
+	ft_putstr_fd(res, 1);
+	*count += ft_strlen(res);
+	if (is_cnull == 1)
+	{
+		ft_putchar_fd(0, 1);
+		ft_putstr_fd(res + ft_strlen(res) + 1, 1);
+		*count += 1 + ft_strlen(res + ft_strlen(res) + 1);
+	}
 }
