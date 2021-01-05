@@ -45,16 +45,24 @@ char			*ft_format_str(char *param_str, t_params *params)
 		return (NULL);
 	}
 	len_pad = info->len_padding;
-	if (len_pad <= 0)
-		res = ft_strdup(converted_org);
-	else if (params->flag_minus == 1)
-		res = ft_concat_padding(converted_org, (size_t)(len_pad), ' ', 1);
-	else if (params->flag_zero == 1)
-		res = ft_concat_padding(converted_org, (size_t)(len_pad), '0', 0);
-	else
-		res = ft_concat_padding(converted_org, (size_t)(len_pad), ' ', 0);
+	res = ft_format_str_joinpad(converted_org, params, len_pad);
 	free(info);
 	free(converted_org);
+	return (res);
+}
+
+char			*ft_format_str_joinpad(char *s, t_params *p, int len_pad)
+{
+	char *res;
+
+	if (len_pad <= 0)
+		res = ft_strdup(s);
+	else if (p->flag_minus == 1)
+		res = ft_concat_padding(s, (size_t)(len_pad), ' ', 1);
+	else if (p->flag_zero == 1)
+		res = ft_concat_padding(s, (size_t)(len_pad), '0', 0);
+	else
+		res = ft_concat_padding(s, (size_t)(len_pad), ' ', 0);
 	return (res);
 }
 

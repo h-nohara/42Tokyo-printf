@@ -42,14 +42,15 @@ typedef	struct	s_fmt_len_info
 */
 
 int				ft_printf(char *fmt, ...);
+int				ft_getarg_format_print(t_params *params, va_list *args);
 int				ft_format(char *param_str, t_params *params, int is_cnull);
 void			ft_print_nonnull_result(char *res, int is_cnull, int *count);
-char			*ft_get_arg(char type, va_list *args, int *has_null);
 char			*ft_proc_format(char *s, va_list *va, int *count);
 
 /*
 ** ft_va_arg_wrapper
 */
+char			*ft_get_arg(char type, va_list *args, int *has_null);
 char			*ft_va_arg_s(va_list *args);
 char			*ft_va_arg_p(va_list *args);
 
@@ -84,6 +85,7 @@ char			*ft_detect_precise(char *s, t_params *p, va_list *args);
 */
 t_fmt_len_info	*info_new();
 char			*ft_format_str(char *param_str, t_params *params);
+char			*ft_format_str_joinpad(char *s, t_params *p, int len_pad);
 void			ft_get_len_s(t_params *params, t_fmt_len_info *info);
 char			*convert_org_str(char *s, t_fmt_len_info *info);
 

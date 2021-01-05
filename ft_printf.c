@@ -34,9 +34,7 @@ int		ft_printf(char *fmt, ...)
 
 char	*ft_proc_format(char *s, va_list *args, int *count)
 {
-	char		*tmp;
 	t_params	*params;
-	int			has_null;
 	int			count_add;
 
 	if (*s != '%')
@@ -52,13 +50,8 @@ char	*ft_proc_format(char *s, va_list *args, int *count)
 		params->type = *(s++);
 	else
 		return (s);
-	has_null = 0;
-	tmp = ft_get_arg(params->type, args, &has_null);
-	if (!tmp)
-		return (NULL);
-	count_add = ft_format(tmp, params, has_null);
+	count_add = ft_getarg_format_print(params, args);
 	free(params);
-	free(tmp);
 	if (count_add == -1)
 		return (NULL);
 	else
@@ -66,6 +59,21 @@ char	*ft_proc_format(char *s, va_list *args, int *count)
 		*count += count_add;
 		return (s);
 	}
+}
+
+int		ft_getarg_format_print(t_params *params, va_list *args)
+{
+	char *param_str;
+	int has_null;
+	int count;
+
+	has_null = 0;
+	param_str = ft_get_arg(params->type, args, &has_null);
+	if (!param_str)
+		return (-1);
+	count = ft_format(param_str, params, has_null);
+	free(param_str);
+	return (count);
 }
 
 int		ft_format(char *param_str, t_params *params, int is_cnull)
@@ -105,33 +113,4 @@ void	ft_print_nonnull_result(char *res, int is_cnull, int *count)
 		ft_putstr_fd(res + ft_strlen(res) + 1, 1);
 		*count += 1 + ft_strlen(res + ft_strlen(res) + 1);
 	}
-}
-
-char	*ft_get_arg(char type, va_list *args, int *has_null)
-{
-	char	*param_str;
-	int		c;
-
-	if (type == 's')
-		param_str = ft_va_arg_s(args);
-	else if (type == 'c')
-	{
-		c = va_arg(*args, int);
-		if (c == 0)
-			*has_null = 1;
-		param_str = ft_ctos((char)c);
-	}
-	else if (type == 'd' || type == 'i')
-		param_str = ft_itoa(va_arg(*args, int));
-	else if (type == 'u')
-		param_str = ft_long_itoa(va_arg(*args, unsigned int));
-	else if (type == 'x' || type == 'X')
-		param_str = ft_convert_to_hex(va_arg(*args, long), type == 'X');
-	else if (type == 'p')
-		param_str = ft_va_arg_p(args);
-	else if (type == '%')
-		param_str = ft_strdup("%");
-	else
-		param_str = ft_strdup("");
-	return (param_str);
 }
