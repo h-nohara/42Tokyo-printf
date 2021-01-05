@@ -24,54 +24,34 @@ char	*ft_format_hex(char *param_str, t_params *params)
 		return (NULL);
 	width = params->width;
 	precise = params->precise;
-	if (precise == -1)
-	{
-		if (width == -1)
-			res = ft_strdup(s);
-		else
-			res = ft_format_hex_w(s, params);
-	}
-	else if (precise == -2)
-	{
-		if (width == -1)
-			res = ft_strdup(s);
-		else
-			res = ft_format_hex_w(s, params);
-	}
-	else
-	{
-		if (width == -1)
-			res = ft_format_hex_p(s, params);
-		else
-			res = ft_format_hex_wp(s, params);
-	}
+	res = ft_format_hex_core(s, width, precise, params);
 	free(s);
 	return (res);
 }
 
-char	*ft_hex_check_zero_precise(char *param_str, t_params *params)
+char	*ft_format_hex_core(char *s, int width, int precise, t_params *params)
 {
-	int is_zero;
-
-	is_zero = ft_hex_is_zero(param_str);
-	if (params->precise == 0)
+	if (precise == -1)
 	{
-		if (is_zero == 0)
-			params->precise = 1;
+		if (width == -1)
+			return (ft_strdup(s));
 		else
-		{
-			if (params->width == -1)
-				return (ft_strdup(""));
-			else
-			{
-				params->precise = 1;
-				return (ft_strdup(" "));
-			}
-		}
+			return (ft_format_hex_w(s, params));
 	}
-	else if (params->precise == -2 && is_zero == 1)
-		return (ft_strdup(""));
-	return (ft_strdup(param_str));
+	else if (precise == -2)
+	{
+		if (width == -1)
+			return (ft_strdup(s));
+		else
+			return (ft_format_hex_w(s, params));
+	}
+	else
+	{
+		if (width == -1)
+			return (ft_format_hex_p(s, params));
+		else
+			return(ft_format_hex_wp(s, params));
+	}
 }
 
 char	*ft_format_hex_w(char *param_str, t_params *params)

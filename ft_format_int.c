@@ -24,48 +24,34 @@ char	*ft_format_int(char *param_str, t_params *params)
 		return (NULL);
 	width = params->width;
 	precise = params->precise;
-	if (precise == -1)
-	{
-		if (width == -1)
-			res = ft_strdup(zero_checked_str);
-		else
-			res = ft_format_int_w(zero_checked_str, params);
-	}
-	else if (precise == -2)
-	{
-		if (width == -1)
-			res = ft_strdup(zero_checked_str);
-		else
-			res = ft_format_int_w(zero_checked_str, params);
-	}
-	else if (width == -1)
-		res = ft_format_int_p(zero_checked_str, params);
-	else
-		res = ft_format_int_wp(zero_checked_str, params);
+	res = ft_format_int_core(zero_checked_str, width, precise, params);
 	free(zero_checked_str);
 	return (res);
 }
 
-char	*ft_int_check_zero_precise(char *param_str, t_params *params)
+char	*ft_format_int_core(char *s, int width, int precise, t_params *params)
 {
-	if (params->precise == 0)
+	char *res;
+
+	if (precise == -1)
 	{
-		if (param_str[0] != '0')
-			params->precise = 1;
+		if (width == -1)
+			res = ft_strdup(s);
 		else
-		{
-			if (params->width == -1)
-				return (ft_strdup(""));
-			else
-			{
-				params->precise = 1;
-				return (ft_strdup(" "));
-			}
-		}
+			res = ft_format_int_w(s, params);
 	}
-	else if (params->precise == -2 && param_str[0] == '0')
-		return (ft_strdup(""));
-	return (ft_strdup(param_str));
+	else if (precise == -2)
+	{
+		if (width == -1)
+			res = ft_strdup(s);
+		else
+			res = ft_format_int_w(s, params);
+	}
+	else if (width == -1)
+		res = ft_format_int_p(s, params);
+	else
+		res = ft_format_int_wp(s, params);
+	return (res);
 }
 
 char	*ft_format_int_w(char *param_str, t_params *params)
@@ -104,50 +90,4 @@ char	*ft_format_int_p(char *param_str, t_params *params)
 		return (ft_strdup(param_str));
 	len_zero_pad = precise - len_base;
 	return (ft_int_pad_zero(param_str, len_zero_pad));
-}
-
-char	*ft_format_int_wp(char *s, t_params *p)
-{
-	int		precise;
-	int		len;
-	int		l;
-	int		is_neg;
-	char	*tmp;
-	char	*res;
-	char	*res2;
-
-	precise = p->precise;
-	is_neg = *s == '-';
-	len = ft_strlen(s);
-	l = is_neg ? len - 1 : len;
-	if (l < precise)
-	{
-		if (is_neg == 1)
-		{
-			tmp = ft_concat_padding(++s, precise - l, '0', 0);
-			if (!tmp)
-				return (NULL);
-			res = ft_strjoin("-", tmp);
-			free(tmp);
-		}
-		else
-			res = ft_concat_padding(s, precise - len, '0', 0);
-		if (!res)
-			return (NULL);
-		len = ft_strlen(res);
-	}
-	else
-	{
-		res = ft_strdup(s);
-		if (!res)
-			return (NULL);
-	}
-	if (p->width <= len)
-		return (res);
-	else
-	{
-		res2 = ft_concat_padding(res, p->width - len, ' ', p->flag_minus == 1);
-		free(res);
-		return (res2);
-	}
 }

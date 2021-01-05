@@ -34,13 +34,11 @@ char			*ft_format_str(char *param_str, t_params *params)
 	char			*res;
 	int				len_pad;
 
-	info = info_new();
-	if (!info)
+	if (!(info = info_new()))
 		return (NULL);
 	info->len_org = ft_strlen(param_str);
 	ft_get_len_s(params, info);
-	converted_org = convert_org_str(param_str, info);
-	if (!converted_org)
+	if (!(converted_org = convert_org_str(param_str, info)))
 	{
 		free(info);
 		return (NULL);

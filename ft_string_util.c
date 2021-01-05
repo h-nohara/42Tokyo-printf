@@ -12,6 +12,14 @@
 
 #include "ft_printf.h"
 
+char	ft_is_format_code(char c)
+{
+	if (c == 'c' || c == 's' || c == 'p' || c == 'd' || c == 'i' || c == 'u' ||
+			c == 'x' || c == 'X' || c == '%')
+		return (c);
+	return (0);
+}
+
 char	*ft_ctos(char c)
 {
 	char *s;

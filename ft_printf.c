@@ -32,14 +32,6 @@ int		ft_printf(char *fmt, ...)
 	return (count);
 }
 
-char	ft_is_format_code(char c)
-{
-	if (c == 'c' || c == 's' || c == 'p' || c == 'd' || c == 'i' || c == 'u' ||
-			c == 'x' || c == 'X' || c == '%')
-		return (c);
-	return (0);
-}
-
 char	*ft_proc_format(char *s, va_list *args, int *count)
 {
 	char		*tmp;
@@ -65,6 +57,7 @@ char	*ft_proc_format(char *s, va_list *args, int *count)
 	if (!tmp)
 		return (NULL);
 	count_add = ft_format(tmp, params, has_null);
+	free(params);
 	free(tmp);
 	if (count_add == -1)
 		return (NULL);
@@ -97,16 +90,21 @@ int		ft_format(char *param_str, t_params *params, int is_cnull)
 		res = ft_strdup("");
 	if (!res)
 		return (-1);
+	ft_print_nonnull_result(res, is_cnull, &count);
+	free(res);
+	return (count);
+}
+
+void	ft_print_nonnull_result(char *res, int is_cnull, int *count)
+{
 	ft_putstr_fd(res, 1);
-	count += ft_strlen(res);
+	*count += ft_strlen(res);
 	if (is_cnull == 1)
 	{
 		ft_putchar_fd(0, 1);
 		ft_putstr_fd(res + ft_strlen(res) + 1, 1);
-		count += 1 + ft_strlen(res + ft_strlen(res) + 1);
+		*count += 1 + ft_strlen(res + ft_strlen(res) + 1);
 	}
-	free(res);
-	return (count);
 }
 
 char	*ft_get_arg(char type, va_list *args, int *has_null)
