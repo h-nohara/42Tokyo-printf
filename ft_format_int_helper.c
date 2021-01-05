@@ -6,7 +6,7 @@
 /*   By: hnohara <hnohara@student.42tokyo.j>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/15 20:57:35 by hnohara           #+#    #+#             */
-/*   Updated: 2020/12/15 20:57:38 by hnohara          ###   ########.fr       */
+/*   Updated: 2021/01/05 17:33:36 by hnohara          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,15 +57,13 @@ char	*ft_int_check_zero_precise(char *param_str, t_params *params)
 char	*ft_format_int_wp(char *s, t_params *p)
 {
 	int		len;
-	int		len_digit;
 	int		is_neg;
 	char	*res;
 	char	*res2;
 
 	is_neg = *s == '-';
 	len = ft_strlen(s);
-	len_digit = is_neg ? len - 1 : len;
-	res = ft_format_int_wp_core(s, &len, len_digit, p->precise, is_neg);
+	res = ft_format_int_wp_core(s, &len, p->precise, is_neg);
 	if (p->width <= len)
 		return (res);
 	else
@@ -76,11 +74,13 @@ char	*ft_format_int_wp(char *s, t_params *p)
 	}
 }
 
-char	*ft_format_int_wp_core(char *s, int *len, int len_digit, int precise, int is_neg)
+char	*ft_format_int_wp_core(char *s, int *len, int precise, int is_neg)
 {
-	char *tmp;
-	char *res;
+	int		len_digit;
+	char	*tmp;
+	char	*res;
 
+	len_digit = is_neg ? *len - 1 : *len;
 	if (len_digit < precise)
 	{
 		if (is_neg == 1)
@@ -96,12 +96,8 @@ char	*ft_format_int_wp_core(char *s, int *len, int len_digit, int precise, int i
 		if (!res)
 			return (NULL);
 		*len = ft_strlen(res);
+		return (res);
 	}
 	else
-	{
-		res = ft_strdup(s);
-		if (!res)
-			return (NULL);
-	}
-	return (res);
+		return (ft_strdup(s));
 }

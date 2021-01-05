@@ -6,7 +6,7 @@
 /*   By: hnohara <hnohara@student.42tokyo.j>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 16:26:39 by hnohara           #+#    #+#             */
-/*   Updated: 2020/12/15 21:16:17 by hnohara          ###   ########.fr       */
+/*   Updated: 2021/01/05 17:32:33 by hnohara          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ char			*ft_format_str(char *param_str, t_params *params)
 		return (NULL);
 	info->len_org = ft_strlen(param_str);
 	ft_get_len_s(params, info);
-	if (!(converted_org = convert_org_str(param_str, info)))
+	converted_org = convert_org_str(param_str, info);
+	if (!converted_org)
 	{
 		free(info);
 		return (NULL);

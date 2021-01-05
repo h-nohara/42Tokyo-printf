@@ -6,7 +6,7 @@
 /*   By: hnohara <hnohara@student.42tokyo.j>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 16:33:32 by hnohara           #+#    #+#             */
-/*   Updated: 2021/01/05 15:54:03 by hnohara          ###   ########.fr       */
+/*   Updated: 2021/01/05 17:30:52 by hnohara          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ typedef	struct	s_fmt_len_info
 
 int				ft_printf(char *fmt, ...);
 int				ft_format(char *param_str, t_params *params, int is_cnull);
-void	ft_print_nonnull_result(char *res, int is_cnull, int *count);
+void			ft_print_nonnull_result(char *res, int is_cnull, int *count);
 char			*ft_get_arg(char type, va_list *args, int *has_null);
 char			*ft_proc_format(char *s, va_list *va, int *count);
 
@@ -97,22 +97,21 @@ char			*ft_concat_padding_cnull(int width, int is_left, int is_zero);
 ** format int
 */
 char			*ft_format_int(char *param_str, t_params *params);
-char			*ft_format_int_core(char *s, int width, int precise, t_params *params);
+char			*ft_format_int_core(char *s, int w, int p, t_params *ps);
 char			*ft_format_int_w(char *param_str, t_params *params);
 char			*ft_format_int_p(char *param_str, t_params *params);
 
 char			*ft_format_int_wp(char *param_str, t_params *params);
-char			*ft_format_int_wp_core(char *s, int *len, int len_digit, int precise, int is_neg);
+char			*ft_format_int_wp_core(char *s, int *len, int p, int n);
 
 char			*ft_int_pad_zero(char *s, int len_zero_pad);
 char			*ft_int_check_zero_precise(char *param_str, t_params *params);
-
 
 /*
 ** format hex
 */
 char			*ft_format_hex(char *param_str, t_params *params);
-char			*ft_format_hex_core(char *s, int width, int precise, t_params *params);
+char			*ft_format_hex_core(char *s, int w, int prec, t_params *p);
 char			*ft_format_hex_w(char *param_str, t_params *params);
 char			*ft_format_hex_p(char *param_str, t_params *params);
 char			*ft_format_hex_wp(char *param_str, t_params *params);

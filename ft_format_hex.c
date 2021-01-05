@@ -6,7 +6,7 @@
 /*   By: hnohara <hnohara@student.42tokyo.j>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 15:54:11 by hnohara           #+#    #+#             */
-/*   Updated: 2021/01/05 15:54:51 by hnohara          ###   ########.fr       */
+/*   Updated: 2021/01/05 17:12:34 by hnohara          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ char	*ft_format_hex_core(char *s, int width, int precise, t_params *params)
 		if (width == -1)
 			return (ft_format_hex_p(s, params));
 		else
-			return(ft_format_hex_wp(s, params));
+			return (ft_format_hex_wp(s, params));
 	}
 }
 
