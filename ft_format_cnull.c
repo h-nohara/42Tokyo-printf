@@ -22,7 +22,7 @@ char	*ft_format_cnull(t_params *params)
 	if (width <= 0)
 		width = 1;
 	if (width == 1)
-		return (ft_strdup("\0"));
+		return (ft_ctos(0));
 	flag_minus = params->flag_minus;
 	flag_zero = params->flag_zero;
 	return (ft_concat_padding_cnull(width, flag_minus, flag_zero));

@@ -82,10 +82,10 @@ int	ft_format(char *param_str, t_params *params, int is_cnull)
 	int count;
 
 	count = 0;
+	type = params->type;
 	if (is_cnull == 1)
 		res = ft_format_cnull(params);
-	type = params->type;
-	if (type == 's' || type == '%' || type == 'c')
+	else if (type == 's' || type == '%' || type == 'c')
 		res = ft_format_str(param_str, params);
 	else if (type == 'd' || type == 'i' || type == 'u')
 		res = ft_format_int(param_str, params);
@@ -93,16 +93,18 @@ int	ft_format(char *param_str, t_params *params, int is_cnull)
 		res = ft_format_hex(param_str, params);
 	else if (type == 'p')
 		res = ft_format_ptr(param_str, params);
+	else
+		res = ft_strdup("");
 	if (!res)
 		return (-1);
 	ft_putstr_fd(res, 1);
 	count += ft_strlen(res);
 	if (is_cnull == 1)
 	{
-		ft_putchar_fd('\0', 1);
+		ft_putchar_fd(0, 1);
 		res += ft_strlen(res) + 1;
-		ft_putstr_fd(res, 1);
-		count += 1 + ft_strlen(res);
+		/* ft_putstr_fd(res, 1); */
+		/* count += 1 + ft_strlen(res); */
 	}
 	free(res);
 	return (count);
