@@ -12,6 +12,18 @@
 
 #include "ft_printf.h"
 
+void	ft_print_nonnull_result(char *res, int is_cnull, int *count)
+{
+	ft_putstr_fd(res, 1);
+	*count += ft_strlen(res);
+	if (is_cnull == 1)
+	{
+		ft_putchar_fd(0, 1);
+		ft_putstr_fd(res + ft_strlen(res) + 1, 1);
+		*count += 1 + ft_strlen(res + ft_strlen(res) + 1);
+	}
+}
+
 char	ft_is_format_code(char c)
 {
 	if (c == 'c' || c == 's' || c == 'p' || c == 'd' || c == 'i' || c == 'u' ||

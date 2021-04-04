@@ -44,7 +44,7 @@ typedef	struct	s_fmt_len_info
 int				ft_printf(char *fmt, ...);
 int				ft_getarg_format_print(t_params *params, va_list *args);
 int				ft_format(char *param_str, t_params *params, int is_cnull);
-void			ft_print_nonnull_result(char *res, int is_cnull, int *count);
+char *ft_format_core(char type, char **p_param_str, t_params **p_params, int is_cnull);
 char			*ft_proc_format(char *s, va_list *va, int *count);
 
 /*
@@ -62,6 +62,7 @@ t_params		*ft_init_params();
 /*
 ** string_util
 */
+void			ft_print_nonnull_result(char *res, int is_cnull, int *count);
 char			ft_is_format_code(char c);
 char			*ft_ctos(char c);
 char			*ft_concat_padding(char *s, size_t len, char c, int is_left);
