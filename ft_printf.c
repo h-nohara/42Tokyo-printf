@@ -6,7 +6,7 @@
 /*   By: hnohara <hnohara@student.42tokyo.j>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 16:31:29 by hnohara           #+#    #+#             */
-/*   Updated: 2021/01/05 18:03:19 by hnohara          ###   ########.fr       */
+/*   Updated: 2021/04/04 12:14:08 by hnohara          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,14 +92,14 @@ int		ft_format(char *param_str, t_params *params, int is_cnull)
 	return (count);
 }
 
-char *ft_format_core(char type, char **p_param_str, t_params **p_params, int is_cnull)
+char	*ft_format_core(char type, char **s, t_params **p, int is_cnull)
 {
-	char *res;
-	char *param_str;
-	t_params *params;
+	char		*res;
+	char		*param_str;
+	t_params	*params;
 
-	param_str = *p_param_str;
-	params = *p_params;
+	param_str = *s;
+	params = *p;
 	if (is_cnull == 1)
 		res = ft_format_cnull(params);
 	else if (type == 's' || type == '%' || type == 'c')

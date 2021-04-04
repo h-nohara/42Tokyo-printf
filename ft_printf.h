@@ -6,7 +6,7 @@
 /*   By: hnohara <hnohara@student.42tokyo.j>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 16:33:32 by hnohara           #+#    #+#             */
-/*   Updated: 2021/01/05 17:30:52 by hnohara          ###   ########.fr       */
+/*   Updated: 2021/04/04 12:12:38 by hnohara          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ typedef	struct	s_fmt_len_info
 int				ft_printf(char *fmt, ...);
 int				ft_getarg_format_print(t_params *params, va_list *args);
 int				ft_format(char *param_str, t_params *params, int is_cnull);
-char *ft_format_core(char type, char **p_param_str, t_params **p_params, int is_cnull);
+char			*ft_format_core(char t, char **p_s, t_params **p_p, int flag);
 char			*ft_proc_format(char *s, va_list *va, int *count);
 
 /*
