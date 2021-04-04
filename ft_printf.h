@@ -80,6 +80,7 @@ char			*ft_detect_percent(char *s, int *count);
 char			*ft_detect_flag(char *s, t_params *params);
 char			*ft_detect_width(char *s, t_params *params, va_list *args);
 char			*ft_detect_precise(char *s, t_params *p, va_list *args);
+void			ft_get_precise(char *s, char *start, t_params *params);
 
 /*
 ** format str

@@ -74,7 +74,6 @@ char	*ft_detect_precise(char *s, t_params *params, va_list *args)
 {
 	char	*start;
 	int		found;
-	char	*tmp;
 
 	found = 0;
 	if (*s == '.')
@@ -94,13 +93,18 @@ char	*ft_detect_precise(char *s, t_params *params, va_list *args)
 		if (s == start && found == 0)
 			params->precise = -2;
 		else if (s != start)
-		{
-			tmp = ft_substr(start, 0, s - start);
-			if (!tmp)
-				return (s);
-			params->precise = ft_atoi(tmp);
-			free(tmp);
-		}
+			ft_get_precise(s, start, params);
 	}
 	return (s);
+}
+
+void	ft_get_precise(char *s, char *start, t_params *params)
+{
+	char *tmp;
+
+	tmp = ft_substr(start, 0, s - start);
+	if (!tmp)
+		return ;
+	params->precise = ft_atoi(tmp);
+	free(tmp);
 }
