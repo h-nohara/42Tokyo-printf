@@ -49,16 +49,16 @@ char	*ft_proc_format(char *s, va_list *args, int *count)
 	if (ft_is_format_code(*s))
 		params->type = *(s++);
 	else
+	{
+		free(params);
 		return (s);
+	}
 	count_add = ft_getarg_format_print(params, args);
 	free(params);
 	if (count_add == -1)
 		return (NULL);
-	else
-	{
-		*count += count_add;
-		return (s);
-	}
+	*count += count_add;
+	return (s);
 }
 
 int		ft_getarg_format_print(t_params *params, va_list *args)
