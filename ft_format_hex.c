@@ -1,108 +1,124 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_format_hex.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hnohara <hnohara@student.42tokyo.j>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/12/14 15:54:11 by hnohara           #+#    #+#             */
+/*   Updated: 2021/01/06 02:18:54 by hnohara          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 
-int ft_hex_is_zero(char *s)
+char	*ft_format_hex(char *param_str, t_params *params)
 {
-    if (*s == '0' && ft_strlen(s) == 1)
-        return (1);
-    else
-        return (0);
+	int		width;
+	int		precise;
+	char	*s;
+	char	*res;
+
+	s = ft_hex_check_zero_precise(param_str, params);
+	if (!s)
+		return (NULL);
+	width = params->width;
+	precise = params->precise;
+	res = ft_format_hex_core(s, width, precise, params);
+	free(s);
+	return (res);
 }
 
-char *ft_format_hex(char *param_str, t_plist *params)
+char	*ft_format_hex_core(char *s, int width, int precise, t_params *params)
 {
-    int width;
-    int precise;
-
-    width = params->width;
-    if (params->precise == 0)
-    {
-        if (ft_hex_is_zero(param_str) == 0)
-            params->precise = 1;
-        else {
-            if (params->width == -1)
-                param_str = "";
-            else
-                {
-                    params->precise = 1;
-                    param_str = " ";
-                }
-        }
-    }
-    else if (params->precise == -2 && ft_hex_is_zero(param_str) == 1)
-        param_str = "";
-    precise = params -> precise;
-    if (precise == -1)
-    {
-        if (width == -1)
-            return (param_str);
-        else
-            return (ft_format_hex_w(param_str, params));
-    }
-    if (precise == -2)
-    {
-        if (width == -1)
-            return (param_str);
-        else
-            return (ft_format_hex_w(param_str, params));
-    }
-    if (width == -1)
-        return (ft_format_hex_p(param_str, params));
-    else
-        return (ft_format_hex_wp(param_str, params));
+	if (precise == -1)
+	{
+		if (width == -1)
+			return (ft_strdup(s));
+		else
+			return (ft_format_hex_w(s, params));
+	}
+	else if (precise == -2)
+	{
+		if (width == -1)
+			return (ft_strdup(s));
+		else
+			return (ft_format_hex_w(s, params));
+	}
+	else
+	{
+		if (width == -1)
+			return (ft_format_hex_p(s, params));
+		else
+			return (ft_format_hex_wp(s, params));
+	}
 }
 
-char *ft_hex_pad_zero(char *s, int len_zero_pad)
+char	*ft_format_hex_w(char *param_str, t_params *params)
 {
-    if (ft_strlen(s) <= 0)
-        return (s);
-    return (ft_concat_padding(s, len_zero_pad, '0', 0));
+	int len;
+	int len_pad;
+	int flag;
+
+	len = ft_strlen(param_str);
+	if (len >= params->width)
+		return (ft_strdup(param_str));
+	else
+	{
+		len_pad = params->width - len;
+		if ((params->flag_zero == 1) && (params->flag_minus == 0))
+		{
+			if (len > 0)
+				return (ft_concat_padding(param_str, len_pad, '0', 0));
+			else
+				return (ft_strdup(param_str));
+		}
+		flag = params->flag_minus;
+		return (ft_concat_padding(param_str, len_pad, ' ', flag));
+	}
 }
 
-char *ft_format_hex_w(char *param_str, t_plist *params)
+char	*ft_format_hex_p(char *param_str, t_params *params)
 {
-    int len;
-    int len_padding;
+	int precise;
+	int len;
+	int len_zero_pad;
 
-    len = ft_strlen(param_str);
-    if (len >= params->width)
-        return (param_str);
-    else
-    {
-        len_padding = params->width - len;
-        if ((params->flag_zero == 1) && (params->flag_minus == 0))
-            return (ft_hex_pad_zero(param_str, len_padding));
-        return (ft_concat_padding(param_str, len_padding, ' ', params->flag_minus == 1));
-    }
+	precise = params->precise;
+	len = ft_strlen(param_str);
+	if (len >= precise)
+		return (ft_strdup(param_str));
+	len_zero_pad = precise - len;
+	if (len > 0)
+		return (ft_concat_padding(param_str, len_zero_pad, '0', 0));
+	else
+		return (ft_strdup(param_str));
 }
 
-char *ft_format_hex_p(char *param_str, t_plist *params)
+char	*ft_format_hex_wp(char *s, t_params *params)
 {
-    int precise;
-    int len;
-    int len_zero_pad;
+	int		precise;
+	int		len;
+	int		flag;
+	char	*tmp;
+	char	*res;
 
-    precise = params->precise;
-    len = ft_strlen(param_str);
-    if (len >= precise)
-        return (param_str);
-    len_zero_pad = precise - len;
-    return (ft_hex_pad_zero(param_str, len_zero_pad));
-}
-
-char *ft_format_hex_wp(char *s, t_plist *params)
-{
-    int precise;
-    int len;
-
-    precise = params->precise;
-    len = ft_strlen(s);
-    if (len < precise)
-    {
-        s = ft_concat_padding(s, precise - len, '0', 0);
-        len = ft_strlen(s);
-    }
-    if (params->width <= len)
-        return (s);
-    else
-        return (ft_concat_padding(s, params->width - len, ' ', params->flag_minus == 1));
+	precise = params->precise;
+	len = ft_strlen(s);
+	if (len < precise)
+		tmp = ft_concat_padding(s, precise - len, '0', 0);
+	else
+		tmp = ft_strdup(s);
+	if (!tmp)
+		return (NULL);
+	len = ft_strlen(tmp);
+	if (params->width <= len)
+		return (tmp);
+	else
+	{
+		flag = params->flag_minus == 1;
+		res = ft_concat_padding(tmp, params->width - len, ' ', flag);
+		free(tmp);
+		return (res);
+	}
 }
